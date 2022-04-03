@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:BookingApplication.ViewModels"
+             x:Class="BookingApplication.WelcomePage">
+
+    <ContentPage.BindingContext>
+        <vm:WelcomePageVM/>
+    </ContentPage.BindingContext>
+    <Grid>
+        <BoxView>
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="1,1">
+                    <GradientStop Color="Transparent" Offset="0"/>
+                    <GradientStop Color="Turquoise" Offset="0.9"/>
+                    <GradientStop Color="Turquoise" Offset="1"/>
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+        <Grid RowDefinitions="Auto,Auto,Auto" HeightRequest="280" Margin="30,30,30,100" 
+              RowSpacing="40" VerticalOptions="End" >
+            <CarouselView ItemsSource="{Binding Afisari}" VerticalOptions="End" IndicatorView="WPageInd">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Spacing="10">
+                            <Label Text="{Binding Titlu}" TextColor="Black" FontSize="26" FontAttributes="Bold" HorizontalOptions="Start" WidthRequest="200"/>
+                            <Label Text="{Binding Detalii}" TextColor="Black" FontSize="13" WidthRequest="250" HorizontalOptions="Start"/>
+
+                        </StackLayout>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <IndicatorView x:Name="WPageInd" Grid.Row="1" IndicatorsShape="Circle" IndicatorColor="Wheat" SelectedIndicatorColor="Red"/>
+            <StackLayout Grid.Row="2" Orientation="Horizontal" Spacing="20">
+                <Button Clicked="SignUpClicked"  Text="Sign Up" HeightRequest="50" WidthRequest="160" CornerRadius="30" BackgroundColor="DeepPink"/>
+                <Button Clicked="LoginClicked" Text="Login" HeightRequest="50" WidthRequest="160" CornerRadius="30" BackgroundColor="HotPink"/>
+            </StackLayout>
+        </Grid>
+        
+    </Grid>
+</ContentPage>
