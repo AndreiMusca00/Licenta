@@ -29,5 +29,9 @@ namespace BookingApplication
             await App.Database.DeleteUserAsync(slist);
             await Navigation.PopAsync();
         }
+        async void OnMergiClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
     }
 }

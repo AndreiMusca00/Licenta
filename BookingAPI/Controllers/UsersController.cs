@@ -40,7 +40,7 @@ namespace BookingAPI.Controllers
                 return NotFound();
             }
 
-            return Ok();
+            return Ok(users);
         }
         
         // GET: api?users dupa member username
@@ -115,7 +115,7 @@ namespace BookingAPI.Controllers
         }
 
         // DELETE: api/Users/5
-        [HttpDelete("{id}")]
+        [HttpDelete("del/{id}")]
         public async Task<IActionResult> DeleteUsers(int id)
         {
             var users = await _context.Users.FindAsync(id);

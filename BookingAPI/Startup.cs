@@ -13,6 +13,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using BookingAPI.Data;
+using BookingAPI.Repositories;
+using BookingAPI.Managers;
+using BookingAPI.Models;
 
 namespace BookingAPI
 {
@@ -38,7 +41,11 @@ namespace BookingAPI
             services.AddDbContext<BookingAPIContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("BookingAPIContext")));
             //Try frudm
-            services.AddScoped<IAuthRepo, AuthRepo>();
+            
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IProprietatiRepository, ProprietatiRepository>();
+           services.AddScoped<IProprietatiManager, ProprietatiManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

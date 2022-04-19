@@ -11,7 +11,8 @@ namespace BookingApplication.Data
         Task<List<Users>> RefreshDataAsync();
         Task SaveUserAsync(Users item, bool isNewItem);
         Task DeleteUserAsync(int id);
-        Task<Users> GetUserByUserName(string UsNa);
-        
+        Task<List<Proprietate>> GetProprietati();
+
+
     }
 }

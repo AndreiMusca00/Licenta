@@ -12,6 +12,8 @@ namespace BookingApplication.Data
         {
             restService = service;
         }
+
+
         public Task<List<Users>> GetUsersAsync()
         {
             
@@ -25,11 +27,11 @@ namespace BookingApplication.Data
         {
             return restService.DeleteUserAsync(item.ID);
         }
-
-        //Login interface 
-        public Task<Users> GetUserByUserName(string username)
+        //vizualizare proprietate 
+        public Task<List<Proprietate>> GetProprietati()
         {
-            return restService.GetUserByUserName(username);
+            return restService.GetProprietati();
         }
+       
     }
 }

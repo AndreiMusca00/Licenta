@@ -23,6 +23,7 @@
                 <Button Text="Save" Clicked="OnSaveButtonClicked" />
                 <Button Grid.Column="1" Text="Delete" Clicked="OnDeleteButtonClicked"/>
             </Grid>
+            <Button Text="Mergi inapoi " Clicked="OnMergiClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

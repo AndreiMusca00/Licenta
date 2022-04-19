@@ -5,16 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using BookingApplication.Models;
 using Newtonsoft.Json;
+
 namespace BookingApplication.Data
 {
     public class RestService : IRestService
     {
         HttpClient client;
         //se va modifica ulterior cu ip-ul si portul corespunzator
-        string RestUrl = "https://192.168.0.100:45455/api/Users/{0}";
-        string LoginUrl = "https://192.168.0.100:45455/api/Users/login/";
+        string RestUrl = "https://192.168.0.128:45455/api/Users/{0}";
+        string PropUrl = "https://192.168.0.128:45455/api/Proprietati/{0}";
+        //string LoginUrl = "https://192.168.0.100:45455/api/Users/login/";
         public List<Users> Items { get; private set; }
         public Users Item {get;set;}
+        public List<Proprietate> Proprietati;
         public RestService()
         {
             var httpClientHandler = new HttpClientHandler();
@@ -22,27 +25,27 @@ namespace BookingApplication.Data
             (message, cert, chain, errors) => { return true; };
             client = new HttpClient(httpClientHandler);
         }
-        //Incercare login 
-        public async Task<Users> GetUserByUserName(string UsNa)
+        //Vizualizare proprietate
+        public async Task<List<Proprietate>> GetProprietati()
         {
-            Item = new Users();
-            Uri uri = new Uri(string.Format(LoginUrl, UsNa));
+            Proprietati = new List<Proprietate>();
+            Uri uri = new Uri(string.Format(PropUrl,string.Empty));
             try
             {
                 HttpResponseMessage response = await client.GetAsync(uri);
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    Item = JsonConvert.DeserializeObject<Users>(content);
+                    Proprietati = JsonConvert.DeserializeObject<List<Proprietate>>(content);
                 }
-            }catch (Exception ex)
+            }catch(Exception ex)
             {
                 Console.WriteLine(@"\tERROR {0}", ex.Message);
             }
-            return Item;
-
+            return Proprietati;
         }
-        //FInal incercari 
+
+        //
         public async Task<List<Users>> RefreshDataAsync()
         {
             Items = new List<Users>();

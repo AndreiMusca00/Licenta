@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Plugin.Toast;
 using BookingApplication.Models;
+using BookingApplication.Views;
 namespace BookingApplication.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -24,9 +25,10 @@ namespace BookingApplication.Views
             {
                 //var user = new Users();
                 //user.Username = userEntry.Text.ToString();
-                var p = await App.Database.GetUserByUserName(userEntry.Text.ToString());
-                
-          
+                //var p = await App.Database.GetUserByUserName(userEntry.Text.ToString());
+                await Navigation.PushAsync(new ProprietatiPage { });
+
+
             }
             catch(Exception ex)
             {
