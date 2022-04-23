@@ -25,8 +25,8 @@ namespace BookingAPI.Managers
         }
 
         public async Task<Proprietate> AddProprietate(AddProprietateDTO prop,int userId)
-        {
-            return await _proprietatiRepository.AddProprietate(prop,userId);
+        {         
+            return await _proprietatiRepository.AddProprietate(prop, userId);
         }
         public async Task<List<Proprietate>> GetProprietati()
         {
