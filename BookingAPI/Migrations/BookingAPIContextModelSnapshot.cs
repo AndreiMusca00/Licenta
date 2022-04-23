@@ -44,9 +44,37 @@ namespace BookingAPI.Migrations
                     b.Property<string>("Strada")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Proprietate");
+                });
+
+            modelBuilder.Entity("BookingAPI.Models.Rezervare", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("proprietateId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("proprietateId");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Rezervare");
                 });
 
             modelBuilder.Entity("BookingAPI.Models.User", b =>
@@ -70,6 +98,12 @@ namespace BookingAPI.Migrations
 
                     b.Property<string>("Prenume")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Basic");
 
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
@@ -107,6 +141,25 @@ namespace BookingAPI.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("BookingAPI.Models.Rezervare", b =>
+                {
+                    b.HasOne("BookingAPI.Models.Proprietate", "Proprietate")
+                        .WithMany()
+                        .HasForeignKey("proprietateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookingAPI.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Proprietate");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

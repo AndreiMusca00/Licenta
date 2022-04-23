@@ -47,7 +47,7 @@ namespace BookingAPI.Controllers
         }
 
         [HttpPost]
-        [Route("Login/{username}&{password}")]
+        [Route("Login")]
         public async Task<IActionResult> Login(UserLoginDTO request)
         {
             string response = await _userRepository.Login(

@@ -115,7 +115,8 @@ namespace BookingAPI.Repositories
                 //incercare
                 new Claim(ClaimTypes.Email,user.Mail),
                 new Claim(ClaimTypes.Surname,user.Nume),
-                new Claim(ClaimTypes.GivenName,user.Prenume)
+                new Claim(ClaimTypes.GivenName,user.Prenume),
+                new Claim(ClaimTypes.Role,user.Role)
             };
 
             SymmetricSecurityKey key = new SymmetricSecurityKey(

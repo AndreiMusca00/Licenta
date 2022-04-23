@@ -6,8 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookingAPI.Managers;
 using BookingAPI.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using BookingAPI.DTOs;
+
 namespace BookingAPI.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class ProprietatiController : ControllerBase
@@ -17,13 +22,9 @@ namespace BookingAPI.Controllers
         {
             _proprietatiManager = manager;
         }
-        [HttpPost]
-        public async Task<Proprietate> AddProprietate(Proprietate prop)
-        {
-            return await _proprietatiManager.AddProprietate(prop);
-        }
-
-        [HttpGet]
+    
+        [AllowAnonymous]
+        [HttpGet("all")]
         public async Task<IActionResult> GetProprietati()
         {
             var pr = await _proprietatiManager.GetProprietati();
@@ -35,7 +36,7 @@ namespace BookingAPI.Controllers
                 return BadRequest();
             }
         }
-
+        [Authorize(Roles ="Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProprietate(int id)
         {
@@ -48,6 +49,31 @@ namespace BookingAPI.Controllers
             {
                 return BadRequest();
             }
+        }
+        //Partea de get / add proprietati pe baza unui user !!
+        /*
+         * 
+         * 
+         * 
+         * 
+         */
+        [Authorize(Roles ="Admin")]
+        [HttpGet]
+        public async Task<IActionResult> GetPropByUserId()
+        {
+            int id = 0;
+            id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            
+            return Ok(await _proprietatiManager.GetPropByUserId(id));
+        }
+        [Authorize(Roles ="Admin")]
+        [HttpPost]
+        public async Task<Proprietate> AddProprietate(AddProprietateDTO prop)
+        {
+            int id = 0;
+            id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            return await _proprietatiManager.AddProprietate(prop, id);
+           
         }
     }
 }

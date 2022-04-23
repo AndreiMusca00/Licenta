@@ -16,5 +16,7 @@ namespace BookingAPI.Models
         public string Numar { get; set; }
         public int Pret { get; set; }
 
+        
+        public int userId { get; set; }
     }
 }

@@ -64,7 +64,7 @@ namespace BookingAPI.Controllers
                 {
                     return Ok(user);
                 }
-            }catch(Exception ex)
+            }catch(Exception )
             {
                 return BadRequest();
             }
