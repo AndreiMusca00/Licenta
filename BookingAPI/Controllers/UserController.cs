@@ -50,8 +50,17 @@ namespace BookingAPI.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login(UserLoginDTO request)
         {
-            string response = await _userRepository.Login(
-                request.Username, request.Password);
+            LoginTokenDTO token = await _userRepository.Login(request.Username,request.Password);
+            if (token.Token.Contains("not"))
+            {
+                return BadRequest(token);
+            }
+            else
+            {
+                return Ok(token);
+            }
+            /*
+            string response = await _userRepository.Login(request.Username, request.Password);
             if (response.Contains("not"))
             {
                 return BadRequest(response);
@@ -59,7 +68,7 @@ namespace BookingAPI.Controllers
             else
             {
                 return Ok(response);
-            }
+            }*/
         }
 
     }

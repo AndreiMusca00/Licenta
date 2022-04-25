@@ -9,6 +9,7 @@ using Xamarin.Forms.Xaml;
 using Plugin.Toast;
 using BookingApplication.Models;
 using BookingApplication.Views;
+using BookingApplication.DTOs;
 namespace BookingApplication.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -23,11 +24,18 @@ namespace BookingApplication.Views
         {
             try
             {
-                //var user = new Users();
-                //user.Username = userEntry.Text.ToString();
-                //var p = await App.Database.GetUserByUserName(userEntry.Text.ToString());
-                await Navigation.PushAsync(new ProprietatiPage { });
-
+                UserLoginDTO user = new UserLoginDTO();
+                user.Username = userEntry.Text.ToString();
+                user.Password = passwordEntry.Text.ToString();
+                var response = await App.Database.LoginUserAsync(user);
+                if(response.Token=="Wrong password"||response.Token=="User not found")
+                {
+                    await DisplayAlert("Eroare Login!","Username sau parola gresita","Reincearca");
+                }else
+                {
+                    await Navigation.PushAsync(new ProprietatiPage());
+                }
+              
 
             }
             catch(Exception ex)
@@ -35,7 +43,7 @@ namespace BookingApplication.Views
                 await DisplayAlert("Warning", "Username sau parola gresita ", "OK");
                 Console.WriteLine(ex.Message);
             }
-           // 
+           
             
         }
     }

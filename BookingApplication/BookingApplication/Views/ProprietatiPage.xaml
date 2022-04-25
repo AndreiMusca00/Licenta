@@ -7,13 +7,20 @@
 
     </ContentPage.ToolbarItems>
 
-    <ListView x:Name="listView" Margin="20" >
+    <ListView x:Name="listView" Margin="20" HasUnevenRows="True" ItemSelected="listView_ItemSelected">
         <ListView.ItemTemplate>
             <DataTemplate>
-                
-                    <TextCell Text="{Binding Nume}" Detail="{Binding Id}"  />
-                    
-                
+                <ViewCell>
+                    <StackLayout Padding="5" Orientation="Horizontal" >
+                         <Label Text="{Binding Nume}"></Label>
+                        <StackLayout Padding="5">
+                        <Label Text="{Binding Judet}"/>
+                        <Label Text="{Binding Oras}"/>
+                        <Label Text="{Binding Strada}"/>
+                        </StackLayout>
+                        <Label Text="{Binding Pret}"/>
+                    </StackLayout>
+                </ViewCell>
             </DataTemplate>
 
         </ListView.ItemTemplate>

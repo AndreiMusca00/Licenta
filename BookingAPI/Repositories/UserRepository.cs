@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using Newtonsoft;
+using BookingAPI.DTOs;
 
 namespace BookingAPI.Repositories
 {
@@ -17,7 +19,7 @@ namespace BookingAPI.Repositories
     {
         Task<int> Register(User user, string password);
         Task<bool> UserExists(string username);
-        Task<string> Login(string username, string password);
+        Task<LoginTokenDTO> Login(string username, string password);
         Task<List<User>> GetUsers();
         Task<int> Delete(int id);
     }
@@ -74,18 +76,25 @@ namespace BookingAPI.Repositories
         }
 
         //Login with pass verification 
-        public async Task<string> Login(string username,string password)
+        public async Task<LoginTokenDTO> Login(string username,string password)
         {
             User user = await _context.User.FirstOrDefaultAsync(x => x.Username.ToLower().Equals(username.ToLower()));
-            if(user == null)
+            LoginTokenDTO token = new LoginTokenDTO();
+            if (user == null)
             {
-                return "User not found";
+                token.Token = "User not found";
+                return token;
             }else if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
             {
-                return "Wrong Password";
+                token.Token = "Wrong password";
+                return token;
             }else
             {
-                return CreateToken(user);
+                
+                token.Token = CreateToken(user);
+                token.Username = username;
+                
+                return token;
             }
              
         }
@@ -134,7 +143,7 @@ namespace BookingAPI.Repositories
 
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-
+            
             return tokenHandler.WriteToken(token);
         }
 

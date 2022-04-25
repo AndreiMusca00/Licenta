@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BookingApplication.Models;
 using Newtonsoft.Json;
-
+using BookingApplication.DTOs;
 namespace BookingApplication.Data
 {
     public class RestService : IRestService
@@ -25,6 +25,9 @@ namespace BookingApplication.Data
             (message, cert, chain, errors) => { return true; };
             client = new HttpClient(httpClientHandler);
         }
+
+        //Inregistrare User 
+        
         //Vizualizare proprietate
         public async Task<List<Proprietate>> GetProprietati()
         {

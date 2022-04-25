@@ -3,16 +3,38 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using BookingApplication.Models;
+using BookingApplication.DTOs;
 namespace BookingApplication.Data
 {
     public class BookingDatabase
     {
         IRestService restService;
-        public BookingDatabase(IRestService service)
+        IuserRestService _userRestService;
+        public BookingDatabase(IRestService service, IuserRestService iuserRestService)
         {
             restService = service;
+            _userRestService = iuserRestService;
+        }
+        //user rest service 
+        /*
+         * 
+         * 
+         * 
+         */
+        public Task<string> RegisterUser(UserRegisterDTO user)
+        {
+            return _userRestService.RegisterUserAsync(user);
         }
 
+        public Task<LoginToken> LoginUserAsync(UserLoginDTO user)
+        {
+            return _userRestService.LoginUserAsync(user);
+        }
+        /*
+         * 
+         * 
+         * 
+         */
 
         public Task<List<Users>> GetUsersAsync()
         {
@@ -30,7 +52,7 @@ namespace BookingApplication.Data
         //vizualizare proprietate 
         public Task<List<Proprietate>> GetProprietati()
         {
-            return restService.GetProprietati();
+            return _userRestService.GetProprietati();
         }
        
     }

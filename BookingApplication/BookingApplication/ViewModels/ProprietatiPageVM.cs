@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using BookingApplication.Models;
 namespace BookingApplication.ViewModels
 {
@@ -10,11 +11,11 @@ namespace BookingApplication.ViewModels
         public string counter;
         public  ProprietatiPageVM()
         {
-            GetProp();
+           // GetProp();
         }
-        public async void GetProp()
+        public async Task<List<Proprietate>> GetProp()
         {
-            Prop =  await App.Database.GetProprietati();
+           return  await App.Database.GetProprietati();
         }
 
     }

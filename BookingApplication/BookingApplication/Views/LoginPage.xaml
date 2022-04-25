@@ -5,8 +5,9 @@
     <ContentPage.Content>
         <StackLayout>
             <Entry x:Name="userEntry"  Placeholder="Username" />
-            <Entry Placeholder="Password" />
+            <Entry x:Name="passwordEntry" Placeholder="Password" IsPassword="true"/>
             <Button Text="Sign in" Clicked="LoginButtonClicked"/>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
