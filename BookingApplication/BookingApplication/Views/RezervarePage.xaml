@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookingApplication.Views.RezervarePage"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label x:Name="lblPropId" Text="Label prop iddd"/>
+            <Label Text="Alegeti data pe care doriti sa o rezervati"/>
+            <DatePicker x:Name="datePicker" Date="{x:Static sys:DateTime.Today}" MinimumDate="{x:Static sys:DateTime.Today}"/>
+            <Button x:Name="btnRezerva" Text="Rezervă" Clicked="btnRezerva_Clicked"/>
+            <Button x:Name="btnCancel" Text="Cancel" Clicked="btnCancel_Clicked"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

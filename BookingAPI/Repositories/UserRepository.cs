@@ -93,7 +93,7 @@ namespace BookingAPI.Repositories
                 
                 token.Token = CreateToken(user);
                 token.Username = username;
-                
+                token.Role = user.Role;
                 return token;
             }
              

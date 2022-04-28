@@ -12,10 +12,19 @@ namespace BookingApplication.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProprietatePage : ContentPage
     {
-        public ProprietatePage()
+        Proprietate proprietateSelectata;
+        public ProprietatePage(Proprietate proprietate)
         {
             InitializeComponent();
+            BindingContext = proprietate;
+            proprietateSelectata = proprietate;
         }
 
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            btnAdd.Text=Convert.ToString( proprietateSelectata.Id);
+            int proprietateId = proprietateSelectata.Id;
+            await Navigation.PushModalAsync(new RezervarePage(proprietateId));
+        }
     }
 }

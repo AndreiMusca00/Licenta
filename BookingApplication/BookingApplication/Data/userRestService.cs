@@ -17,6 +17,7 @@ namespace BookingApplication.Data
         Task<string> RegisterUserAsync(UserRegisterDTO user);
         Task<LoginToken> LoginUserAsync(UserLoginDTO user);
         Task<List<Proprietate>> GetProprietati();
+        Task<string> AddRezervare(int proprietateId, DateTime data);
     }
 
     public class userRestService : IuserRestService
@@ -26,7 +27,8 @@ namespace BookingApplication.Data
 
         string RegisterUrl = "https://192.168.0.128:45455/api/User/Register/{0}";
         string LoginUrl = "https://192.168.0.128:45455/api/User/Login/{0}";
-        string PropUrl = "https://192.168.0.128:45455/api/Proprietati/all/{0}";
+        string ProprietatiUrl = "https://192.168.0.128:45455/api/Proprietati/all/{0}";
+        string RezervariUrl = "https://192.168.0.128:45455/api/Rezervari/{0}";
 
         public List<Proprietate> Proprietati;
         public userRestService()
@@ -71,6 +73,9 @@ namespace BookingApplication.Data
             string x = await response.Content.ReadAsStringAsync();
             LoginToken token = JsonConvert.DeserializeObject<LoginToken>(x);
             //adaugare token in header 
+            //var handler = new JwtSecurityTokenHandler();
+           // var tokenn = handler.ReadJwtToken(token.Token);
+            
             var authHeader = new AuthenticationHeaderValue("bearer", token.Token);
             client.DefaultRequestHeaders.Authorization = authHeader;
             return token;
@@ -79,7 +84,7 @@ namespace BookingApplication.Data
         public async Task<List<Proprietate>> GetProprietati()
         {
             Proprietati = new List<Proprietate>();
-            Uri uri = new Uri(string.Format(PropUrl, string.Empty));
+            Uri uri = new Uri(string.Format(ProprietatiUrl, string.Empty));
             try
             {
                 HttpResponseMessage response = await client.GetAsync(uri);
@@ -95,6 +100,28 @@ namespace BookingApplication.Data
             }
             return Proprietati;
 
+        }
+
+        public async Task<string> AddRezervare(int proprietateId, DateTime data)
+        {
+            //de completat pentru add rezervare cu interpolation 
+            AddRezervareDTO rezervare = new AddRezervareDTO();
+            rezervare.dataRezervare = data;
+            rezervare.proprietateId = proprietateId;
+            Uri uri = new Uri(string.Format(RezervariUrl,string.Empty));
+            string json = JsonConvert.SerializeObject(rezervare);
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = null;
+            response = await client.PostAsync(uri, content);
+          
+            if(response.IsSuccessStatusCode)
+            {
+                return "ok";
+            }else
+            {
+                return "fail";
+            }
         }
     }
 }

@@ -15,7 +15,7 @@
             <Label Text="{Binding Numar}"/>
             
             <Label Text="{Binding Pret}"/>
-            <Button Text="Adauga rezervare"/>
+            <Button x:Name="btnAdd" Text="Adauga rezervare" Clicked="Button_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

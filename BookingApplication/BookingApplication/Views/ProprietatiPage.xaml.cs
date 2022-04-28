@@ -15,10 +15,11 @@ namespace BookingApplication.Views
     public partial class ProprietatiPage : ContentPage
     {
         ProprietatiPageVM ViewModel = new ProprietatiPageVM();
-        public ProprietatiPage()
+        string _role;
+        public ProprietatiPage(string Role)
         {
             InitializeComponent();
-           
+            _role = Role;
         }
         protected override async void OnAppearing()        
         {
@@ -28,15 +29,23 @@ namespace BookingApplication.Views
 
         async void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-          
-                if (e.SelectedItem != null)
-                {
+            if (e.SelectedItem != null)
+            {
+                Proprietate prop = e.SelectedItem as Proprietate;
+                await Navigation.PushAsync(new ProprietatePage(prop));
+                /*
                     await Navigation.PushAsync(new ProprietatePage
                     {
                         BindingContext = e.SelectedItem as Proprietate
                     });
-                }
+                */
+            }
             
+        }
+
+        private async void ToolbarItem_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ProfilulMeuPage(_role));
         }
     }
 }

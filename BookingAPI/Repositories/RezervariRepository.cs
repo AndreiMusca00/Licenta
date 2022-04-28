@@ -8,7 +8,7 @@ namespace BookingAPI.Repositories
 {
     public interface IRezervariRepository {
     Object UserRezervariHistory(int id);
-        Task<Rezervare> UserAddRezervare(int userId, int proprietateId,string data);
+        Task<Rezervare> UserAddRezervare(int userId, int proprietateId,DateTime data);
         Object AdminRezervariHistory(int id);
     }
 
@@ -57,12 +57,12 @@ namespace BookingAPI.Repositories
                 
             return rez;
         }
-        public async Task<Rezervare> UserAddRezervare(int userId,int proprietateId,string data)
+        public async Task<Rezervare> UserAddRezervare(int userId,int proprietateId,DateTime data)
         {
             Rezervare rez = new Rezervare();
             rez.proprietateId = proprietateId;
             rez.userId = userId;
-            rez.Data = Convert.ToDateTime(data);
+            rez.Data = data;
             _context.Rezervare.Add(rez);
             await _context.SaveChangesAsync();
             return rez;

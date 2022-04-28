@@ -10,7 +10,7 @@ namespace BookingAPI.Managers
     public interface IRezervariManager 
     {
         Object UserRezervariHistory(int id);
-        Task<string> UserAddRezervare(int userId, int proprietateId, string data);
+        Task<string> UserAddRezervare(int userId, int proprietateId, DateTime data);
         Object AdminRezervariHistory(int id);
     }
     public class RezervariManager : IRezervariManager
@@ -21,9 +21,9 @@ namespace BookingAPI.Managers
             _rezervariRepository = rezervariRepository;
         }
 
-        public async Task<string> UserAddRezervare(int userId, int proprietateId, string data)
+        public async Task<string> UserAddRezervare(int userId, int proprietateId, DateTime data)
         {
-            DateTime checkDate = Convert.ToDateTime(data);
+            DateTime checkDate = data;
             if (checkDate > DateTime.Today)
             {
                 await _rezervariRepository.UserAddRezervare(userId, proprietateId, data);

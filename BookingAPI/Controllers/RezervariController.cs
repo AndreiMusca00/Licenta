@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BookingAPI.Managers;
+using BookingAPI.DTOs;
 namespace BookingAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -21,7 +22,7 @@ namespace BookingAPI.Controllers
         {
             _rezervariManager = rezervariManager;
         }
-        [Authorize(Roles ="Basic")]
+        [Authorize(Roles ="Basic,Admin")]
         [HttpGet]
         public async Task<IActionResult> UserHistory()
         {
@@ -30,12 +31,12 @@ namespace BookingAPI.Controllers
             return Ok(x);
         }
 
-        [Authorize(Roles ="Basic")]
+        [Authorize(Roles ="Basic, Admin")]
         [HttpPost]
-        public async Task<IActionResult> UserAddRezervare(int proprietateId, string dataRezervare)
+        public async Task<IActionResult> UserAddRezervare(AddRezervareDTO rezervare)
         {
             int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            string response= await _rezervariManager.UserAddRezervare(userId, proprietateId, dataRezervare);
+            string response= await _rezervariManager.UserAddRezervare(userId, rezervare.proprietateId, rezervare.dataRezervare);
             if (response == "Succes")
             {
                 return Ok(response);

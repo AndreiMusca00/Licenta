@@ -54,6 +54,10 @@ namespace BookingApplication.Data
         {
             return _userRestService.GetProprietati();
         }
+        public Task<string> AddRezervare(int proprietateId,DateTime dataRezervare)
+        {
+            return _userRestService.AddRezervare(proprietateId, dataRezervare);
+        }
        
     }
 }

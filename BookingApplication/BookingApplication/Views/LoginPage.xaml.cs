@@ -33,9 +33,9 @@ namespace BookingApplication.Views
                     await DisplayAlert("Eroare Login!","Username sau parola gresita","Reincearca");
                 }else
                 {
-                    await Navigation.PushAsync(new ProprietatiPage());
+                    await Navigation.PushAsync(new ProprietatiPage(response.Role));
                 }
-              
+              //trebuie pasat si user role 
 
             }
             catch(Exception ex)
