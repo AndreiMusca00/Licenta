@@ -4,9 +4,10 @@
              x:Class="BookingApplication.Views.ProfilulMeuPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label x:Name="lblRole" Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label >Bine ai venit, nume utilizator </Label>
+            <Button Text="Vezi istoricul rezervarilor " Clicked="btnIstoricClicked"></Button>
+            <Button x:Name="btnProprietati" IsVisible="false" Text="Vezi managerul de proprietati" Clicked="btnProprietatiClicked"></Button>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

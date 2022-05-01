@@ -59,5 +59,15 @@ namespace BookingApplication.Data
             return _userRestService.AddRezervare(proprietateId, dataRezervare);
         }
        
+        public Task<List<GetRezervareUserDTO>> GetIstoricRezervariBasic()
+        {
+            return _userRestService.GetIstoricRezervariBasic();
+        }
+
+        public Task<List<Proprietate>> GetProprietatiAdmin()
+        {
+            return _userRestService.GetProprietatiAdmin();
+        }
+
     }
 }

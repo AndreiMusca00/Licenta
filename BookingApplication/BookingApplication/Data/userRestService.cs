@@ -18,6 +18,8 @@ namespace BookingApplication.Data
         Task<LoginToken> LoginUserAsync(UserLoginDTO user);
         Task<List<Proprietate>> GetProprietati();
         Task<string> AddRezervare(int proprietateId, DateTime data);
+        Task<List<GetRezervareUserDTO>> GetIstoricRezervariBasic();
+        Task<List<Proprietate>> GetProprietatiAdmin();
     }
 
     public class userRestService : IuserRestService
@@ -28,9 +30,11 @@ namespace BookingApplication.Data
         string RegisterUrl = "https://192.168.0.128:45455/api/User/Register/{0}";
         string LoginUrl = "https://192.168.0.128:45455/api/User/Login/{0}";
         string ProprietatiUrl = "https://192.168.0.128:45455/api/Proprietati/all/{0}";
+        string ProprietatiAdminUrl = "https://192.168.0.128:45455/api/Proprietati/{0}";
         string RezervariUrl = "https://192.168.0.128:45455/api/Rezervari/{0}";
 
         public List<Proprietate> Proprietati;
+        public List<GetRezervareUserDTO> Rezervari;
         public userRestService()
         {
             var httpClientHandler = new HttpClientHandler();
@@ -81,6 +85,7 @@ namespace BookingApplication.Data
             return token;
         }
 
+
         public async Task<List<Proprietate>> GetProprietati()
         {
             Proprietati = new List<Proprietate>();
@@ -104,7 +109,7 @@ namespace BookingApplication.Data
 
         public async Task<string> AddRezervare(int proprietateId, DateTime data)
         {
-            //de completat pentru add rezervare cu interpolation 
+           
             AddRezervareDTO rezervare = new AddRezervareDTO();
             rezervare.dataRezervare = data;
             rezervare.proprietateId = proprietateId;
@@ -122,6 +127,47 @@ namespace BookingApplication.Data
             {
                 return "fail";
             }
+        }
+
+        public async Task<List<GetRezervareUserDTO>> GetIstoricRezervariBasic()
+        {
+            Rezervari = new List<GetRezervareUserDTO>();
+            Uri uri = new Uri(string.Format(RezervariUrl, string.Empty));
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    Rezervari = JsonConvert.DeserializeObject<List<GetRezervareUserDTO>>(content);
+                    
+                }
+            }catch (Exception ex)
+            {
+                Console.WriteLine(@"\tERROR {0}", ex.Message);
+            }
+            return Rezervari;
+        }
+
+        public async Task<List<Proprietate>> GetProprietatiAdmin()
+        {
+            Proprietati = new List<Proprietate>();
+            Uri uri = new Uri(string.Format(ProprietatiAdminUrl, string.Empty));
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    Proprietati = JsonConvert.DeserializeObject<List<Proprietate>>(content);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(@"\tERROR {0}", ex.Message);
+            }
+            return Proprietati;
+
         }
     }
 }

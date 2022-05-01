@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookingAPI.Data;
 using BookingAPI.Models;
+using BookingAPI.DTOs;
 namespace BookingAPI.Repositories
 {
     public interface IRezervariRepository {
-    Object UserRezervariHistory(int id);
+    List<GetRezervareUserDTO> UserRezervariHistory(int id);
         Task<Rezervare> UserAddRezervare(int userId, int proprietateId,DateTime data);
         Object AdminRezervariHistory(int id);
     }
@@ -19,9 +20,10 @@ namespace BookingAPI.Repositories
         {
             _context = context;
         }
-        public  Object  UserRezervariHistory(int id)
+        public  List<GetRezervareUserDTO>  UserRezervariHistory(int id)
         {
-
+            List<GetRezervareUserDTO> rezervari = new List<GetRezervareUserDTO>();
+            
             var rez = _context.User.Where(x => x.Id ==id).Join
                 (
                     _context.Rezervare,
@@ -54,8 +56,21 @@ namespace BookingAPI.Repositories
                         dataRezervare=rezervare.dataRezervare
                     }
                 ).ToList();
-                
-            return rez;
+            foreach( var variabila in rez)
+            {
+                GetRezervareUserDTO rezervare = new GetRezervareUserDTO();
+                rezervare.dataRezervare = variabila.dataRezervare;
+                rezervare.idProprietate = variabila.idProprietate;
+                rezervare.idUser = variabila.idUser;
+                rezervare.judetProprietate = variabila.judetProprietate;
+                rezervare.numarProprietate = variabila.numarProprietate;
+                rezervare.numeProprietate = variabila.numeProprietate;
+                rezervare.orasProprietate = variabila.orasProprietate;
+                rezervare.stradaProprietate = variabila.stradaProprietate;
+                rezervare.user = variabila.User;
+                rezervari.Add(rezervare);
+            }
+            return rezervari;
         }
         public async Task<Rezervare> UserAddRezervare(int userId,int proprietateId,DateTime data)
         {

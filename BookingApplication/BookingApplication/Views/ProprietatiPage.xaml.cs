@@ -16,10 +16,12 @@ namespace BookingApplication.Views
     {
         ProprietatiPageVM ViewModel = new ProprietatiPageVM();
         string _role;
-        public ProprietatiPage(string Role)
+        string _numeUtilizator;
+        public ProprietatiPage(string Role,string numeUtilizator)
         {
             InitializeComponent();
             _role = Role;
+            _numeUtilizator = numeUtilizator;
         }
         protected override async void OnAppearing()        
         {
@@ -45,7 +47,7 @@ namespace BookingApplication.Views
 
         private async void ToolbarItem_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ProfilulMeuPage(_role));
+            await Navigation.PushAsync(new ProfilulMeuPage(_role,_numeUtilizator));
         }
     }
 }
