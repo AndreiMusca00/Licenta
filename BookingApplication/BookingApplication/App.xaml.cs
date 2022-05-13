@@ -12,6 +12,7 @@ namespace BookingApplication
             InitializeComponent();
 
             Database = new BookingDatabase(new RestService(),new userRestService());
+            //MainPage = new NavigationPage(new WelcomePage());
             MainPage = new NavigationPage(new TryImageUploadPage_());
         }
 

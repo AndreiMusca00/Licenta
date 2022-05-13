@@ -72,5 +72,17 @@ namespace BookingAPI.Controllers
             }
             return BadRequest();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var filePath = "C:\\Users\\acer\\Desktop\\Licenta\\Aplicatie\\Aplicatie\\BookingAPI\\Uploads\\IMG_20220507_134458.jpg";
+            if (System.IO.File.Exists(filePath))
+            {
+                byte[] b = System.IO.File.ReadAllBytes(filePath);
+                return File(b, "image/png");
+            }
+            return null;
+        }
     }
 }
