@@ -135,7 +135,10 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt">
       <Version>6.17.0</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+    <PackageReference Include="Xamarin.CommunityToolkit">
+      <Version>2.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -144,5 +147,8 @@
       <Project>{072FC539-DB0E-4E85-A59E-CBCE5AB396EE}</Project>
       <Name>BookingApplication</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\video.mp4" />
   </ItemGroup>
 </Project>

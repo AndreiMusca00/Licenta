@@ -1,13 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BookingApplication.Views.LoginPage">
+             x:Class="BookingApplication.Views.LoginPage"
+              xmlns:xct="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit" xmlns:vm="clr-namespace:BookingApplication.ViewModels">
     <ContentPage.Content>
-        <StackLayout>
-            <Entry x:Name="userEntry"  Placeholder="Username" />
-            <Entry x:Name="passwordEntry" Placeholder="Password" IsPassword="true"/>
-            <Button Text="Sign in" Clicked="LoginButtonClicked"/>
-            
-        </StackLayout>
+        <Grid>
+            <xct:MediaElement x:Name="BgVideo" Source="ms-appx:///video.mp4" ShowsPlaybackControls="False" 
+                        IsLooping="True"  Aspect="AspectFill" AutoPlay="True"></xct:MediaElement>
+            <Grid>
+                <StackLayout Padding="20">
+                    <Entry x:Name="userEntry" Text="{Binding UserName}"  Placeholder="Username" TextColor="White" />
+                    <Entry x:Name="passwordEntry" Placeholder="Password"  Text="{Binding Password}" IsPassword="true" TextColor="White"/>
+                    <Button Text="Sign in"  Command="{Binding LoginCommand}"
+                            CornerRadius="20" WidthRequest="200" HorizontalOptions="Center" BackgroundColor="Gray"/>
+
+
+                </StackLayout>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

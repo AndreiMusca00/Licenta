@@ -41,15 +41,16 @@ namespace BookingApplication.Views
             user.Mail = entryEmail.Text;
             user.Password = entryPassword.Text;
             
-            string json = JsonConvert.SerializeObject(user);
-            var response = await App.Database.RegisterUser(user);
-            if(response=="User creat cu succes")
-            {
+           
+           string json = JsonConvert.SerializeObject(user);
+           var response = await App.Database.RegisterUser(user);
+           if (response == "User creat cu succes")
+           {
                 await Navigation.PopAsync();
-            }else
-            {
-                lblShow.Text = Convert.ToString(response);
             }
+            
+          
+            
         }
     }
 }

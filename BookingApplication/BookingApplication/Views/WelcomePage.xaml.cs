@@ -22,7 +22,6 @@ namespace BookingApplication
         async void SignUpClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RegisterPage());
-           // await Navigation.PushAsync(new ListPage{ BindingContext = new Users()});
         }
 
         async void LoginClicked(object sender, EventArgs e)
