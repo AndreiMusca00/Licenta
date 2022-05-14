@@ -9,6 +9,7 @@ namespace BookingAPI.Repositories
     public interface IImageRespository {
         Task<Image> AddImage(int idProprietate, string pathImagine);
         bool CheckPhotoUpdated(int idProprietate, string pathImagine);
+        Task<string> OneImagePath(int proprietateId);
     }
 
     public class ImageRepository : IImageRespository
@@ -38,5 +39,11 @@ namespace BookingAPI.Repositories
             }
             return true;
         }
+
+        public async Task<string> OneImagePath(int proprietateId)
+        {
+            Image img = _context.Imagine.FirstOrDefault(x => x.idProprietate == proprietateId);
+            return img.imagePath.ToString();
+        } 
     }
 }

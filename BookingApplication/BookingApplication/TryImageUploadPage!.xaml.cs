@@ -68,12 +68,13 @@ namespace BookingApplication
         {
             HttpClientHandler ch = GetInsecureHandler();
             HttpClient httpClient = new HttpClient(ch);
-            string RezervariUrll = "https://192.168.0.128:45456/api/Image";
+            string RezervariUrll = "https://192.168.0.128:45455/api/Image?idProprietate=4";
             var imaginea = await httpClient.GetAsync(RezervariUrll);
             byte[] showing = await imaginea.Content.ReadAsByteArrayAsync();
             testLabel.Text =imaginea.StatusCode.ToString();
             var stream1 = new MemoryStream(showing);
-            imagineaDisplay.Source = ImageSource.FromStream(() => stream1);
+            var x = ImageSource.FromStream(() => stream1);
+            imagineaDisplay.Source = x;
         }
     }
 }

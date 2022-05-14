@@ -10,6 +10,7 @@ namespace BookingAPI.Managers
     {
         Task<Image> AddImage(int idProprietate, string pathImagine);
         bool CheckPhotoUpdated(int idProprietate, string pathImagine);
+        Task<string> OneImagePath(int proprietateId);
     }
     public class ImageManager : IImageManager
     {
@@ -26,6 +27,11 @@ namespace BookingAPI.Managers
         public bool CheckPhotoUpdated(int idProprietate, string pathImagine)
         {
             return _imageRepository.CheckPhotoUpdated(idProprietate, pathImagine);
+        }
+
+        public async Task<string> OneImagePath (int proprietateId)
+        {
+            return await _imageRepository.OneImagePath(proprietateId);
         }
     }
 }

@@ -9,6 +9,10 @@ using Xamarin.Forms.Xaml;
 using BookingApplication.Views;
 using BookingApplication.ViewModels;
 using BookingApplication.Models;
+using BookingApplication.DTOs;
+using System.Net.Http;
+using System.IO;
+
 namespace BookingApplication.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -22,25 +26,63 @@ namespace BookingApplication.Views
             InitializeComponent();
             _role = Role;
             _numeUtilizator = numeUtilizator;
+          
+        }
+        public HttpClientHandler GetInsecureHandler()
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            return handler;
         }
         protected override async void OnAppearing()        
         {
             base.OnAppearing();
-            listView.ItemsSource = await ViewModel.GetProp();
+            //listView.ItemsSource
+                List<Proprietate> prop= await ViewModel.GetProp();
+            List<ProprietateOnePictureDTO> list = new List<ProprietateOnePictureDTO>();
+
+            HttpClientHandler ch = GetInsecureHandler();
+            HttpClient httpClient = new HttpClient(ch);
+            string RezervariUrll = "https://192.168.0.128:45455/api/Image?idProprietate=4";
+
+            foreach (var p in prop)
+            {
+                ProprietateOnePictureDTO item = new ProprietateOnePictureDTO();
+                item.Id = p.Id;
+                item.Judet = p.Judet;
+                item.Numar = p.Numar;
+                item.Nume = p.Nume;
+                item.Oras = p.Oras;
+                item.Pret = p.Pret;
+                item.Strada = p.Strada;
+               
+                var imaginea = await httpClient.GetAsync(RezervariUrll);
+                byte[] showing = await imaginea.Content.ReadAsByteArrayAsync();
+                
+                var stream1 = new MemoryStream(showing);
+                var x = ImageSource.FromStream(() => stream1);
+                item.Imagine = x;
+                list.Add(item);
+            }
+            listView.ItemsSource = list;
+            
         }
 
         async void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem != null)
             {
-                Proprietate prop = e.SelectedItem as Proprietate;
-                await Navigation.PushAsync(new ProprietatePage(prop));
-                /*
-                    await Navigation.PushAsync(new ProprietatePage
-                    {
-                        BindingContext = e.SelectedItem as Proprietate
-                    });
-                */
+                ProprietateOnePictureDTO p = e.SelectedItem as ProprietateOnePictureDTO;
+                Proprietate item = new Proprietate();
+
+                item.Id = p.Id;
+                item.Judet = p.Judet;
+                item.Numar = p.Numar;
+                item.Nume = p.Nume;
+                item.Oras = p.Oras;
+                item.Pret = p.Pret;
+                item.Strada = p.Strada; 
+                await Navigation.PushAsync(new ProprietatePage(item));
             }
             
         }

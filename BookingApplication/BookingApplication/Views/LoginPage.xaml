@@ -13,8 +13,6 @@
                     <Entry x:Name="passwordEntry" Placeholder="Password"  Text="{Binding Password}" IsPassword="true" TextColor="White"/>
                     <Button Text="Sign in"  Command="{Binding LoginCommand}"
                             CornerRadius="20" WidthRequest="200" HorizontalOptions="Center" BackgroundColor="Gray"/>
-
-
                 </StackLayout>
             </Grid>
         </Grid>

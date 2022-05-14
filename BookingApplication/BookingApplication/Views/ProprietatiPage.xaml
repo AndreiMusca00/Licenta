@@ -19,6 +19,9 @@
                         <Label Text="{Binding Strada}"/>
                         </StackLayout>
                         <Label Text="{Binding Pret}"/>
+                        <StackLayout>
+                        <Image x:Name="IMG" Source="{Binding Imagine}" HeightRequest="50" WidthRequest="50"></Image>
+                        </StackLayout>
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
