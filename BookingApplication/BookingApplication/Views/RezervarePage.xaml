@@ -2,15 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BookingApplication.Views.RezervarePage"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib">
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             BackgroundColor="LightGray">
     <ContentPage.Content>
         <StackLayout>
-            <Label x:Name="lblPropId" Text="Label prop iddd"/>
-            <Label Text="Alegeti data pe care doriti sa o rezervati"/>
+            <Label Text="Alegeti data pe care doriti sa o rezervati:" FontSize="20" TextColor="Black"/>
             <DatePicker x:Name="datePicker" Date="{x:Static sys:DateTime.Today}" MinimumDate="{x:Static sys:DateTime.Today}"/>
-            <Button x:Name="btnRezerva" Text="Rezervă" Clicked="btnRezerva_Clicked"/>
-            <Button x:Name="btnCancel" Text="Cancel" Clicked="btnCancel_Clicked"/>
-
+            <Button x:Name="btnRezerva" Text="Rezervă" Clicked="btnRezerva_Clicked" HeightRequest="50" WidthRequest="140" CornerRadius="30" BackgroundColor="Gray"/>
+            <Button x:Name="btnCancel" Text="Cancel" Clicked="btnCancel_Clicked" HeightRequest="50" WidthRequest="140" CornerRadius="30" BackgroundColor="Gray"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

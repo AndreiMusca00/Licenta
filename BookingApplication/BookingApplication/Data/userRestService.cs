@@ -21,6 +21,9 @@ namespace BookingApplication.Data
         Task<List<GetRezervareUserDTO>> GetIstoricRezervariBasic();
         Task<List<Proprietate>> GetProprietatiAdmin();
         Task<string> GetOneImage(int proprietateId);
+        Task<Proprietate> GetProprietate(int proprietateId);
+
+        Task<List<string>> GetImages(int proprietateId);
     }
 
     public class userRestService : IuserRestService
@@ -28,12 +31,12 @@ namespace BookingApplication.Data
         HttpClient client;
         //se va modifica ulterior cu ip-ul si portul corespunzator
 
-        string RegisterUrl = "https://192.168.0.103:45455/api/User/Register/{0}";
-        string LoginUrl = "https://192.168.0.103:45455/api/User/Login/{0}";
-        string ProprietatiUrl = "https://192.168.0.103:45455/api/Proprietati/all/{0}";
-        string ProprietatiAdminUrl = "https://192.168.0.103:45455/api/Proprietati/{0}";
-        string RezervariUrl = "https://192.168.0.103:45455/api/Rezervari/{0}";
-        string ImagineUrl = "https://192.168.0.103:45455/api/Image/img?idProprietate={0}";
+        string RegisterUrl = "https://192.168.100.53:45455/api/User/Register/{0}";
+        string LoginUrl = "https://192.168.100.53:45455/api/User/Login/{0}";
+        string ProprietatiUrl = "https://192.168.100.53:45455/api/Proprietati/all/{0}";
+        string ProprietatiAdminUrl = "https://192.168.100.53:45455/api/Proprietati/{0}";
+        string RezervariUrl = "https://192.168.100.53:45455/api/Rezervari/{0}";
+        string ImagineUrl = "https://192.168.100.53:45455/api/Image/img?idProprietate={0}";
 
         public List<Proprietate> Proprietati;
         public List<GetRezervareUserDTO> Rezervari;
@@ -176,13 +179,33 @@ namespace BookingApplication.Data
             Uri uri = new Uri(String.Format(ImagineUrl, proprietateId));
             var response  = await client.GetAsync(uri);
             string imaginePath = await response.Content.ReadAsStringAsync();
-            if (imaginePath != "")
+            if (imaginePath != "empty")
             {
                 return imaginePath;
             }else
-            {
+            { 
                 return "def.jpg";
             }
+        }
+
+        public async Task<List<string>> GetImages(int proprietateId)
+        {
+            string ImagineUrl = "https://192.168.100.53:45455/api/Image/{1}?idProprietate={0}";
+            Uri uri = new Uri(String.Format(ImagineUrl,proprietateId, "imagini"));
+            var response = await client.GetAsync(uri);
+            var content  = await response.Content.ReadAsStringAsync();
+            List<string> paths = JsonConvert.DeserializeObject<List<string>>(content);
+            return paths;
+        }
+
+        public async Task<Proprietate> GetProprietate(int proprietateId)
+        {
+            string GetProprietateUrl = "https://192.168.100.53:45455/api/Proprietati/proprietateId?proprietateId={0}";
+            Uri uri = new Uri(String.Format(GetProprietateUrl, proprietateId));
+            var response = await client.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
+            Proprietate proprietate = JsonConvert.DeserializeObject<Proprietate>(content);
+            return proprietate;
         }
     }
 }

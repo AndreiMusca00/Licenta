@@ -14,7 +14,7 @@
             <DataTemplate>
                 <ViewCell>
                     <StackLayout Padding="5" Orientation="Horizontal" >
-                        <Image x:Name="IMG" Source="{Binding Imagine}" HeightRequest="100" WidthRequest="100"></Image>
+                        <Image Source="{Binding Imagine}" HeightRequest="100" WidthRequest="100"></Image>
                         <StackLayout HorizontalOptions="FillAndExpand">
                             <Label Text="{Binding Nume}" FontSize="16" TextColor="Black" FontAttributes="Bold,Italic" Margin="10,0"></Label>
                             <Label HorizontalOptions="End" TextColor="Black">

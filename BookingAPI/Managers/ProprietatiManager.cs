@@ -15,6 +15,7 @@ namespace BookingAPI.Managers
         Task<Proprietate> DeleteProprietate(int id);
         Task<bool> FindById(int idProprietate);
         Task<List<Proprietate>> GetPropByUserId(int userId);
+        Task<Proprietate> GetProprietate(int proprietateId);
     }
 
     public class ProprietatiManager : IProprietatiManager
@@ -32,6 +33,18 @@ namespace BookingAPI.Managers
         public async Task<List<Proprietate>> GetProprietati()
         {
             return await _proprietatiRepository.GetProprietati();
+        }
+        public async Task<Proprietate> GetProprietate(int proprietateId)
+        {
+            List<Proprietate> proprietati = await _proprietatiRepository.GetProprietati();
+            foreach(Proprietate prop in proprietati)
+            {
+                if(prop.Id == proprietateId)
+                {
+                    return prop;
+                }
+            }
+            return null;
         }
         public async Task<Proprietate> DeleteProprietate(int id)
         {

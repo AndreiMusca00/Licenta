@@ -13,6 +13,7 @@ namespace BookingAPI.Repositories
 
         //try 
         string ImagineTry(int idRezervare);
+        List<string> GetImagesList(int proprietateId);
     }
 
     public class ImageRepository : IImageRespository
@@ -57,6 +58,12 @@ namespace BookingAPI.Repositories
             if (img != null)
                 return img.imagePath.ToString();
             else return ""; 
+        }
+
+        //Get image list of paths 
+        public List<string> GetImagesList(int proprietateId)
+        {
+            return _context.Imagine.Where(im => im.idProprietate==proprietateId).Select(x => x.imagePath).ToList();
         }
     }
 }

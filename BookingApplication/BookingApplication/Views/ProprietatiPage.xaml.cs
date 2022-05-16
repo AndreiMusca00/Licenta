@@ -77,18 +77,9 @@ namespace BookingApplication.Views
             if (e.SelectedItem != null)
             {
                 ProprietateOnePictureDTO p = e.SelectedItem as ProprietateOnePictureDTO;
-                Proprietate item = new Proprietate() { 
-                    Id = p.Id,
-                    Judet = p.Judet,
-                    Numar = p.Numar,
-                    Nume = p.Nume,
-                    Oras = p.Oras,
-                    Pret = p.Pret,
-                    Strada = p.Strada
-                };
-                await Navigation.PushAsync(new ProprietatePage(item));
-            }
-            
+                await Navigation.PushAsync(new ProprietatePage(p.Id));
+                ((ListView)sender).SelectedItem = null;
+            }   
         }
 
         private async void ToolbarItem_Clicked(object sender, EventArgs e)

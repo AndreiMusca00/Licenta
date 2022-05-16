@@ -19,8 +19,6 @@ namespace BookingApplication.Views
             
             InitializeComponent();
             _proprietateId = proprietateId;
-            lblPropId.Text = Convert.ToString(proprietateId);
-            
         }
 
         private async void btnRezerva_Clicked(object sender, EventArgs e)

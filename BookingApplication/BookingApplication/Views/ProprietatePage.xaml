@@ -1,21 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BookingApplication.Views.ProprietatePage">
+             x:Class="BookingApplication.Views.ProprietatePage"
+             BackgroundColor="LightGray">
     <ContentPage.Content>
         <StackLayout Margin="20">
-            <Label  Text="{Binding Nume}" HeightRequest="100" />
-            
-            <Label Text="{Binding Judet}"/>
-            
-            <Label Text="{Binding Oras}"/>
-            
-            <Label Text="{Binding Strada}" />
-           
-            <Label Text="{Binding Numar}"/>
-            
-            <Label Text="{Binding Pret}"/>
-            <Button x:Name="btnAdd" Text="Adauga rezervare" Clicked="Button_Clicked"/>
+            <CarouselView x:Name="CarouselView" IndicatorView="indicator">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding}"></Image>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <IndicatorView x:Name="indicator" Grid.Row="1" IndicatorsShape="Circle" IndicatorColor="Black" SelectedIndicatorColor="White"/>
+            <StackLayout x:Name="propertyDisplay">
+                <Label  Text="{Binding Nume,StringFormat='{0}'}" HeightRequest="100" FontSize="20" FontAttributes="Bold,Italic" TextColor="Black"/>
+                <Label Text="{Binding Judet,StringFormat='Judet: {0}'}"/>
+                <Label Text="{Binding Oras,StringFormat= 'Localitate: {0}'}"/>
+                <Label Text="{Binding Strada,StringFormat='Strada: {0}'}" />
+                <Label Text="{Binding Numar,StringFormat='Numarul: {0}'}"/>
+                <Label Text="{Binding Pret, StringFormat='Pret/noapte: {0}'}"/>
+            </StackLayout>
+            <Button x:Name="btnAdd" Text="Adauga rezervare" Clicked="Button_Clicked" HeightRequest="50" WidthRequest="160" CornerRadius="30" BackgroundColor="Gray"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

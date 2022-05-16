@@ -75,5 +75,20 @@ namespace BookingAPI.Controllers
             return await _proprietatiManager.AddProprietate(prop, id);
            
         }
+
+        [AllowAnonymous]
+        [HttpGet("proprietateId")]
+        public async Task<IActionResult> GetProprietate(int proprietateId)
+        {
+            var pr = await _proprietatiManager.GetProprietate(proprietateId);
+            if (pr != null)
+            {
+                return Ok(pr);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

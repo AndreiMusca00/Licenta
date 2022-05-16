@@ -87,11 +87,17 @@ namespace BookingAPI.Controllers
         }
 
         [HttpGet("img")]
-        public async Task<IActionResult> GetImg(int idProprietate)
+        public string GetImg(int idProprietate)
         {
             string path = _imageManager.ImagineTry(idProprietate);
-            return Ok(path);
-            //7 as a parameter 
+            return path;
+        }
+
+        [HttpGet("imagini")]
+        public List<string> GetListImages(int idProprietate)
+        {
+            List<string> paths = _imageManager.GetImagesList(idProprietate);
+            return paths;
         }
     }
 }

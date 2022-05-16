@@ -79,5 +79,15 @@ namespace BookingApplication.Data
         {
             return _userRestService.GetOneImage(proprietateId);
         }
+
+        public Task<List<string>> GetImages(int proprietateId)
+        {
+            return _userRestService.GetImages(proprietateId);
+        }
+
+        public Task<Proprietate> GetProprietate(int proprietateId)
+        {
+            return _userRestService.GetProprietate(proprietateId);
+        }
     }
 }
