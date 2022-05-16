@@ -69,5 +69,15 @@ namespace BookingApplication.Data
             return _userRestService.GetProprietatiAdmin();
         }
 
+
+        /*
+         * 
+         * 
+         * Image handlers 
+         */
+        public Task<string> GetOneImagePath(int proprietateId)
+        {
+            return _userRestService.GetOneImage(proprietateId);
+        }
     }
 }

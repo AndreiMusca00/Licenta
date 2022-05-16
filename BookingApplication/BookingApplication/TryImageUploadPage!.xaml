@@ -12,8 +12,9 @@
                    Padding="30,10,30,10"/>
             <Button Text="Pick and Upload" Clicked="Button_Clicked"/>
             <Button Text="Show image" Clicked="Button_Clicked_1"></Button>
-            <Image x:Name="imagineaDisplay" HeightRequest="100"  Background="blue"></Image>
+            <Image x:Name="imagineaDisplay" HeightRequest="100"  Aspect="Fill"></Image>
             <Label x:Name="testLabel" Text="incercare"></Label>
+            <Button Clicked="Button_Uri"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -57,7 +57,10 @@ namespace BookingApplication.ViewModels
                 }
                 else
                 {
-                    Application.Current.MainPage =new NavigationPage(new ProprietatiPage(response.Role, response.Username));
+                    Application.Current.MainPage =new NavigationPage(new ProprietatiPage(response.Role, response.Username)) {
+                        BarBackgroundColor = Color.Gray,
+                        BarTextColor = Color.White
+                    };
                 }   
             }
         }

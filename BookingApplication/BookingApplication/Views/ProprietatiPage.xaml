@@ -1,26 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:BookingApplication.ViewModels"
-             x:Class="BookingApplication.Views.ProprietatiPage">
+             x:Class="BookingApplication.Views.ProprietatiPage"
+             Title="Proprietati Disponibile"
+             BackgroundColor="LightGray">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="ProfilulMeu" Clicked="ToolbarItem_Clicked" />
 
     </ContentPage.ToolbarItems>
 
-    <ListView x:Name="listView" Margin="20" HasUnevenRows="True" ItemSelected="listView_ItemSelected">
+    <ListView x:Name="listView" Margin="20" HasUnevenRows="True" ItemSelected="listView_ItemSelected" >
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
                     <StackLayout Padding="5" Orientation="Horizontal" >
-                         <Label Text="{Binding Nume}"></Label>
-                        <StackLayout Padding="5">
-                        <Label Text="{Binding Judet}"/>
-                        <Label Text="{Binding Oras}"/>
-                        <Label Text="{Binding Strada}"/>
-                        </StackLayout>
-                        <Label Text="{Binding Pret}"/>
-                        <StackLayout>
-                        <Image x:Name="IMG" Source="{Binding Imagine}" HeightRequest="50" WidthRequest="50"></Image>
+                        <Image x:Name="IMG" Source="{Binding Imagine}" HeightRequest="100" WidthRequest="100"></Image>
+                        <StackLayout HorizontalOptions="FillAndExpand">
+                            <Label Text="{Binding Nume}" FontSize="16" TextColor="Black" FontAttributes="Bold,Italic" Margin="10,0"></Label>
+                            <Label HorizontalOptions="End" TextColor="Black">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0}, {1}">
+                                        <Binding Path="Oras"/>
+                                        <Binding Path="Judet"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                            <Label Text="{Binding Pret, StringFormat='Pret: {0}'}" TextDecorations="Underline" TextColor="Black"/>
                         </StackLayout>
                     </StackLayout>
                 </ViewCell>

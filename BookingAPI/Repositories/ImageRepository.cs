@@ -10,6 +10,9 @@ namespace BookingAPI.Repositories
         Task<Image> AddImage(int idProprietate, string pathImagine);
         bool CheckPhotoUpdated(int idProprietate, string pathImagine);
         Task<string> OneImagePath(int proprietateId);
+
+        //try 
+        string ImagineTry(int idRezervare);
     }
 
     public class ImageRepository : IImageRespository
@@ -45,5 +48,15 @@ namespace BookingAPI.Repositories
             Image img = _context.Imagine.FirstOrDefault(x => x.idProprietate == proprietateId);
             return img.imagePath.ToString();
         } 
+
+
+        //try eficienta 
+        public string ImagineTry(int idRezervare)
+        {
+            Image img = _context.Imagine.FirstOrDefault(x => x.idProprietate == idRezervare);
+            if (img != null)
+                return img.imagePath.ToString();
+            else return ""; 
+        }
     }
 }

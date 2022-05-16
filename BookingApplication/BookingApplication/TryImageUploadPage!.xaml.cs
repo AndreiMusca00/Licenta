@@ -10,7 +10,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Drawing;
-
+using System.Net;
 
 namespace BookingApplication
 {
@@ -68,13 +68,44 @@ namespace BookingApplication
         {
             HttpClientHandler ch = GetInsecureHandler();
             HttpClient httpClient = new HttpClient(ch);
-            string RezervariUrll = "https://192.168.0.128:45455/api/Image?idProprietate=4";
-            var imaginea = await httpClient.GetAsync(RezervariUrll);
+            string RezervariUrll = "https://192.168.0.103:45455/api/Image?idProprietate=4";
+            
+            //WebClient wc = new WebClient();
+            //HttpResponseMessage imaginea = await httpClient.GetAsync(RezervariUrll);
+
+            //
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(RezervariUrll);
+            request.AutomaticDecompression = DecompressionMethods.GZip;
+            var test = request.Headers.ToByteArray();
+            var stream1 = new MemoryStream(test);
+            var x = ImageSource.FromStream(() => stream1);
+            imagineaDisplay.Source = x;
+            //
+            /*
             byte[] showing = await imaginea.Content.ReadAsByteArrayAsync();
             testLabel.Text =imaginea.StatusCode.ToString();
             var stream1 = new MemoryStream(showing);
             var x = ImageSource.FromStream(() => stream1);
             imagineaDisplay.Source = x;
+            */
         }
+
+        private async  void Button_Uri(object sender, EventArgs e)
+        {
+            /* imagineaDisplay.Source = new UriImageSource
+             {
+                 Uri = new Uri("https://facingissuesonitcom.files.wordpress.com/2019/11/data-uri-schema.jpg"),
+                 CachingEnabled = true,
+                 CacheValidity = new TimeSpan(3, 0, 0, 0)
+             };  */
+            string RezervariUrll = "https://192.168.0.103:45455/api/Image/img?idProprietate=7";
+            HttpClientHandler ch = GetInsecureHandler();
+            HttpClient httpClient = new HttpClient(ch);
+            var imgPath = await httpClient.GetAsync(RezervariUrll);
+            string content = await imgPath.Content.ReadAsStringAsync();
+            
+            testLabel.Text = content;
+           imagineaDisplay.Source = ImageSource.FromFile(content);
+    }
     }
 }

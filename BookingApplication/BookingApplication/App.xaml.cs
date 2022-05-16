@@ -10,13 +10,13 @@ namespace BookingApplication
         public App()
         {
             InitializeComponent();
-
+            
            Database = new BookingDatabase(new RestService(),new userRestService());
            MainPage = new NavigationPage(new WelcomePage()) {
                BarBackgroundColor = Color.Gray,
-              BarTextColor = Color.White
-            };        
-             //MainPage = new NavigationPage(new TryImageUploadPage_());
+             BarTextColor = Color.White
+            };    
+            //MainPage = new NavigationPage(new TryImageUploadPage_());
 
         }
 

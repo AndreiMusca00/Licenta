@@ -16,6 +16,6 @@ namespace BookingApplication.DTOs
         public string Strada { get; set; }
         public string Numar { get; set; }
         public int Pret { get; set; }
-        public ImageSource Imagine { get; set; }
+        public string Imagine { get; set; }
     }
 }

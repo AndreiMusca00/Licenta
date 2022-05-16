@@ -20,6 +20,7 @@ namespace BookingApplication.Data
         Task<string> AddRezervare(int proprietateId, DateTime data);
         Task<List<GetRezervareUserDTO>> GetIstoricRezervariBasic();
         Task<List<Proprietate>> GetProprietatiAdmin();
+        Task<string> GetOneImage(int proprietateId);
     }
 
     public class userRestService : IuserRestService
@@ -27,11 +28,12 @@ namespace BookingApplication.Data
         HttpClient client;
         //se va modifica ulterior cu ip-ul si portul corespunzator
 
-        string RegisterUrl = "https://192.168.0.128:45455/api/User/Register/{0}";
-        string LoginUrl = "https://192.168.0.128:45455/api/User/Login/{0}";
-        string ProprietatiUrl = "https://192.168.0.128:45455/api/Proprietati/all/{0}";
-        string ProprietatiAdminUrl = "https://192.168.0.128:45455/api/Proprietati/{0}";
-        string RezervariUrl = "https://192.168.0.128:45455/api/Rezervari/{0}";
+        string RegisterUrl = "https://192.168.0.103:45455/api/User/Register/{0}";
+        string LoginUrl = "https://192.168.0.103:45455/api/User/Login/{0}";
+        string ProprietatiUrl = "https://192.168.0.103:45455/api/Proprietati/all/{0}";
+        string ProprietatiAdminUrl = "https://192.168.0.103:45455/api/Proprietati/{0}";
+        string RezervariUrl = "https://192.168.0.103:45455/api/Rezervari/{0}";
+        string ImagineUrl = "https://192.168.0.103:45455/api/Image/img?idProprietate={0}";
 
         public List<Proprietate> Proprietati;
         public List<GetRezervareUserDTO> Rezervari;
@@ -167,7 +169,20 @@ namespace BookingApplication.Data
                 Console.WriteLine(@"\tERROR {0}", ex.Message);
             }
             return Proprietati;
+        }
 
+        public async Task<string> GetOneImage(int proprietateId)
+        {
+            Uri uri = new Uri(String.Format(ImagineUrl, proprietateId));
+            var response  = await client.GetAsync(uri);
+            string imaginePath = await response.Content.ReadAsStringAsync();
+            if (imaginePath != "")
+            {
+                return imaginePath;
+            }else
+            {
+                return "def.jpg";
+            }
         }
     }
 }
