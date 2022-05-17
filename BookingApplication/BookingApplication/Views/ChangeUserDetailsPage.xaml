@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookingApplication.Views.ChangeUserDetailsPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Grid.Row="0" Grid.Column="0" Text="Nume:" TextColor="Black" FontSize="18"/>
+            <Entry  Grid.Row="0" Grid.Column="1" Text="{Binding UserName}" />
+
+            <Label Grid.Row="1" Grid.Column="0" Text="Prenume:" TextColor="Black" FontSize="18"/>
+            <Entry Grid.Row="1" Grid.Column="1" Text="{Binding UserPrenume}" />
+
+            <Label Grid.Row="2" Grid.Column="0" Text="Mail:" TextColor="Black" FontSize="18"/>
+            <Entry Grid.Row="2" Grid.Column="1" Text="{Binding UserMail}" />
+
+            <Label Grid.Row="3" Grid.Column="0" Text="Telefon:" TextColor="Black" FontSize="18"/>
+            <Entry Grid.Row="3" Grid.Column="1" Text="{Binding UserTelefon}" />
+            <Button Text="Submit" Command="{Binding UpdateUserCommand}" BackgroundColor="Gray" CornerRadius="30"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

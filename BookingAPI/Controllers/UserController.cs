@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using BookingAPI.Repositories;
 using BookingAPI.DTOs;
 using BookingAPI.Models;
+using System.Security.Claims;
+
 namespace BookingAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -47,6 +49,38 @@ namespace BookingAPI.Controllers
         }
 
         [HttpPost]
+        [Route("password")]
+        public async Task<IActionResult> ChangePassword(UserLoginDTO user)
+        {
+            int id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            string response = await _userRepository.ChangePassword(id, user.Password);
+            if (response == "ok")
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [Route("user")]
+        public async Task<IActionResult> UpdateUserDetails(UpdateUserDTO user)
+        {
+            int id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            string response = await _userRepository.UpdateUserDetails(user, id);
+            if (response == "ok")
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
         [Route("Login")]
         public async Task<IActionResult> Login(UserLoginDTO request)
         {
@@ -71,5 +105,16 @@ namespace BookingAPI.Controllers
             }*/
         }
 
+        [HttpGet]
+        [Route("ConnectedUser")]
+        public async Task<IActionResult> GetConnectedUser()
+        {
+            int id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            var response = await _userRepository.GetConnectedUser(id);
+            if (response != null)
+                return Ok(response);
+            else
+                return BadRequest();
+        }
     }
 }

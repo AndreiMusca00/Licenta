@@ -1,13 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BookingApplication.Views.ProfilulMeuPage">
+             x:Class="BookingApplication.Views.ProfilulMeuPage"
+             x:Name="MyProfilePage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label >Bine ai venit, nume utilizator </Label>
-            <Button Text="Vezi istoricul rezervarilor " Clicked="btnIstoricClicked"></Button>
-            <Button x:Name="btnProprietati" IsVisible="false" Text="Vezi managerul de proprietati" Clicked="btnProprietatiClicked"></Button>
-            
+        <StackLayout HorizontalOptions="Center"  >
+            <Label FontSize="20" TextColor="Black" FontAttributes="Bold" 
+                 BindingContext="{x:Reference Name=MyProfilePage}" Text="{Binding LblText, StringFormat='Bine ai venit, {0}!'}" ></Label>
+            <StackLayout>
+                <Button Text="Vezi istoricul rezervarilor "  HeightRequest="50" WidthRequest="100" CornerRadius="30" BackgroundColor="Gray" Command="{Binding IstoricRezervariCommand}"></Button>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Padding="10">
+                <Button Text="Editeaza detaliile utilizatorului" HeightRequest="50" WidthRequest="100" CornerRadius="30" BackgroundColor="Gray" Command="{Binding EditUserCommand}"></Button>
+                <Button Text="Schimba parola " HeightRequest="50" WidthRequest="100" CornerRadius="30" BackgroundColor="Gray" Command="{Binding ChangePasswordCommand}"></Button>
+            </StackLayout>
+            <Button x:Name="btnProprietati" IsVisible="false" Text="Vezi managerul de proprietati" 
+                   HeightRequest="50" WidthRequest="100" CornerRadius="30" BackgroundColor="Gray" Command="{Binding ManagerCommand}" ></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

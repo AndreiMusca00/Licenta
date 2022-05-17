@@ -7,16 +7,36 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using BookingApplication.Views;
+using BookingApplication.ViewModels;
 namespace BookingApplication.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProfilulMeuPage : ContentPage
     {
         string _role;
-        string _numeUtilizator;
+        public string _numeUtilizator;
+
+        private string _lblText;
+        public string LblText
+        {
+            get
+            {
+                return _lblText;
+            }
+            set
+            {
+                _lblText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        ProfilulMeuVM profilulMeuVM;
+
         public ProfilulMeuPage(string Role,string numeUtilizator)
         {
             InitializeComponent();
+            profilulMeuVM = new ProfilulMeuVM();
+            BindingContext = profilulMeuVM;
             _role = Role;
             _numeUtilizator = numeUtilizator;
            
@@ -24,21 +44,12 @@ namespace BookingApplication.Views
 
         protected override  void OnAppearing()
         {
+            LblText = _numeUtilizator;
             base.OnAppearing();
             if (_role == "Admin")
             {
                 btnProprietati.IsVisible = true;
             }
-        }
-
-        private async void btnIstoricClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new ProfilulMeuIstoricRezervari());
-        }
-
-        private async void btnProprietatiClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new ProprietatileMele());
         }
     }
 }

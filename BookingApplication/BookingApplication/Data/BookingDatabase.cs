@@ -4,6 +4,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BookingApplication.Models;
 using BookingApplication.DTOs;
+using BookingAPI.DTOs;
+
 namespace BookingApplication.Data
 {
     public class BookingDatabase
@@ -88,6 +90,21 @@ namespace BookingApplication.Data
         public Task<Proprietate> GetProprietate(int proprietateId)
         {
             return _userRestService.GetProprietate(proprietateId);
+        }
+
+        public Task<string> ChangePassword(string password)
+        {
+            return _userRestService.ChangePassword(password);
+        }
+
+        public Task<UpdateUserDTO> GetConnectedUser()
+        {
+            return _userRestService.GetConnectedUser();
+        }
+
+        public Task<string> UpdateUserDetails(UpdateUserDTO user)
+        {
+            return _userRestService.UpdateUserDetails(user);
         }
     }
 }

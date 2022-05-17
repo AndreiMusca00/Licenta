@@ -5,7 +5,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              BackgroundColor="LightGray">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Padding="10">
             <Label Text="Alegeti data pe care doriti sa o rezervati:" FontSize="20" TextColor="Black"/>
             <DatePicker x:Name="datePicker" Date="{x:Static sys:DateTime.Today}" MinimumDate="{x:Static sys:DateTime.Today}"/>
             <Button x:Name="btnRezerva" Text="Rezervă" Clicked="btnRezerva_Clicked" HeightRequest="50" WidthRequest="140" CornerRadius="30" BackgroundColor="Gray"/>

@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Net.Http.Headers;
 using System.IdentityModel.Tokens.Jwt;
+using BookingAPI.DTOs;
 
 namespace BookingApplication.Data
 {
@@ -24,6 +25,9 @@ namespace BookingApplication.Data
         Task<Proprietate> GetProprietate(int proprietateId);
 
         Task<List<string>> GetImages(int proprietateId);
+        Task<string> ChangePassword(string password);
+        Task<UpdateUserDTO> GetConnectedUser();
+        Task<string> UpdateUserDetails(UpdateUserDTO userDetails);
     }
 
     public class userRestService : IuserRestService
@@ -31,12 +35,15 @@ namespace BookingApplication.Data
         HttpClient client;
         //se va modifica ulterior cu ip-ul si portul corespunzator
 
-        string RegisterUrl = "https://192.168.100.53:45455/api/User/Register/{0}";
-        string LoginUrl = "https://192.168.100.53:45455/api/User/Login/{0}";
-        string ProprietatiUrl = "https://192.168.100.53:45455/api/Proprietati/all/{0}";
-        string ProprietatiAdminUrl = "https://192.168.100.53:45455/api/Proprietati/{0}";
-        string RezervariUrl = "https://192.168.100.53:45455/api/Rezervari/{0}";
-        string ImagineUrl = "https://192.168.100.53:45455/api/Image/img?idProprietate={0}";
+        string RegisterUrl = "https://192.168.0.103:45455/api/User/Register/{0}";
+        string LoginUrl = "https://192.168.0.103:45455/api/User/Login/{0}";
+        string ProprietatiUrl = "https://192.168.0.103:45455/api/Proprietati/all/{0}";
+        string ProprietatiAdminUrl = "https://192.168.0.103:45455/api/Proprietati/{0}";
+        string RezervariUrl = "https://192.168.0.103:45455/api/Rezervari/{0}";
+        string ImagineUrl = "https://192.168.0.103:45455/api/Image/img?idProprietate={0}";
+        string ChangePasswordUrl = "https://192.168.0.103:45455/api/User/password{0}";
+        string ConnectedUserUrl = "https://192.168.0.103:45455/api/User/ConnectedUser";
+        string UpdateUserDetailsUrl = "https://192.168.0.103:45455/api/User/user";
 
         public List<Proprietate> Proprietati;
         public List<GetRezervareUserDTO> Rezervari;
@@ -89,8 +96,6 @@ namespace BookingApplication.Data
             client.DefaultRequestHeaders.Authorization = authHeader;
             return token;
         }
-
-
         public async Task<List<Proprietate>> GetProprietati()
         {
             Proprietati = new List<Proprietate>();
@@ -111,7 +116,6 @@ namespace BookingApplication.Data
             return Proprietati;
 
         }
-
         public async Task<string> AddRezervare(int proprietateId, DateTime data)
         {
            
@@ -133,7 +137,6 @@ namespace BookingApplication.Data
                 return "fail";
             }
         }
-
         public async Task<List<GetRezervareUserDTO>> GetIstoricRezervariBasic()
         {
             Rezervari = new List<GetRezervareUserDTO>();
@@ -153,7 +156,6 @@ namespace BookingApplication.Data
             }
             return Rezervari;
         }
-
         public async Task<List<Proprietate>> GetProprietatiAdmin()
         {
             Proprietati = new List<Proprietate>();
@@ -173,7 +175,6 @@ namespace BookingApplication.Data
             }
             return Proprietati;
         }
-
         public async Task<string> GetOneImage(int proprietateId)
         {
             Uri uri = new Uri(String.Format(ImagineUrl, proprietateId));
@@ -187,25 +188,63 @@ namespace BookingApplication.Data
                 return "def.jpg";
             }
         }
-
         public async Task<List<string>> GetImages(int proprietateId)
         {
-            string ImagineUrl = "https://192.168.100.53:45455/api/Image/{1}?idProprietate={0}";
+            string ImagineUrl = "https://192.168.0.103:45455/api/Image/{1}?idProprietate={0}";
             Uri uri = new Uri(String.Format(ImagineUrl,proprietateId, "imagini"));
             var response = await client.GetAsync(uri);
             var content  = await response.Content.ReadAsStringAsync();
             List<string> paths = JsonConvert.DeserializeObject<List<string>>(content);
             return paths;
         }
-
         public async Task<Proprietate> GetProprietate(int proprietateId)
         {
-            string GetProprietateUrl = "https://192.168.100.53:45455/api/Proprietati/proprietateId?proprietateId={0}";
+            string GetProprietateUrl = "https://192.168.0.103:45455/api/Proprietati/proprietateId?proprietateId={0}";
             Uri uri = new Uri(String.Format(GetProprietateUrl, proprietateId));
             var response = await client.GetAsync(uri);
             var content = await response.Content.ReadAsStringAsync();
             Proprietate proprietate = JsonConvert.DeserializeObject<Proprietate>(content);
             return proprietate;
+        }
+        public async Task<string> ChangePassword(string password)
+        {
+            Uri uri = new Uri(string.Format(ChangePasswordUrl,string.Empty));
+            UserLoginDTO user = new UserLoginDTO();
+            user.Password = password;
+
+            string json = JsonConvert.SerializeObject(user);
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+            
+            var response = await client.PostAsync(uri,content);
+            if (response.IsSuccessStatusCode)
+            {
+                return "Parola schimbata";
+            }
+            else { 
+                return "Fail";
+            }
+        }
+        public async Task<UpdateUserDTO> GetConnectedUser()
+        {
+            Uri uri = new Uri(ConnectedUserUrl);
+            var response = await client.GetAsync(uri);
+            string content = await response.Content.ReadAsStringAsync();
+            UpdateUserDTO connectedUser = JsonConvert.DeserializeObject<UpdateUserDTO>(content);
+            return connectedUser;
+        }
+        public async Task<string> UpdateUserDetails(UpdateUserDTO userDetails)
+        {
+            Uri uri = new Uri(UpdateUserDetailsUrl);
+            string json = JsonConvert.SerializeObject(userDetails);
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+            var resposnse = await client.PostAsync(uri, content);
+            if (resposnse.IsSuccessStatusCode)
+            {
+                return "ok";
+            }else
+            {
+                return "fail";
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ namespace BookingAPI.Models
         public string Mail { get; set; }
         public string Nume { get; set; }
         public string Prenume { get; set; }
+        public string Telefon { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         [Required]

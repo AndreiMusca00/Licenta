@@ -22,6 +22,9 @@ namespace BookingAPI.Repositories
         Task<LoginTokenDTO> Login(string username, string password);
         Task<List<User>> GetUsers();
         Task<int> Delete(int id);
+        Task<string> ChangePassword(int userId, string password);
+        Task<string> UpdateUserDetails(UpdateUserDTO user, int id);
+        Task<UpdateUserDTO> GetConnectedUser(int userId);
     }
     public class UserRepository : IUserRepository
     {
@@ -32,7 +35,6 @@ namespace BookingAPI.Repositories
             _context = context;
             _configuration = configuration;
         }
-        //Delete user - incercare 
         public async Task<int> Delete(int id)
         {
             if (await _context.User.AnyAsync(x => x.Id == id))
@@ -151,6 +153,59 @@ namespace BookingAPI.Repositories
         public async Task<List<User>> GetUsers()
         {
             return await _context.User.ToListAsync();
+        }
+        public async Task<string> ChangePassword(int userId, string password)
+        {
+            try { 
+                User userul = _context.User.Find(userId);
+                CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+                userul.PasswordHash = passwordHash;
+                userul.PasswordSalt = passwordSalt;
+                _context.User.Update(userul);
+                await _context.SaveChangesAsync();
+                return "ok";
+            }
+            catch (Exception)
+            {
+                return "fail";
+            }
+        }
+        public async Task<string> UpdateUserDetails(UpdateUserDTO user, int userId)
+        {
+            try
+            {
+                User userul = _context.User.Find(userId);
+                userul.Nume = user.Nume;
+                userul.Mail = user.Mail;
+                userul.Prenume = user.Prenume;
+                userul.Telefon = user.Telefon;
+                _context.User.Update(userul);
+                await _context.SaveChangesAsync();
+                return "ok";
+            }
+            catch (Exception)
+            {
+                return "fail";
+            }
+        }
+
+        public async Task<UpdateUserDTO> GetConnectedUser(int userId)
+        {
+            try
+            {
+                User userul = await _context.User.FindAsync(userId);
+                UpdateUserDTO connectedUser = new UpdateUserDTO() {
+                    Nume = userul.Nume,
+                    Prenume=userul.Prenume,
+                    Mail=userul.Mail,
+                    Telefon=userul.Telefon
+                };
+                return connectedUser;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

@@ -9,14 +9,20 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Padding="5" Orientation="Horizontal" >
-                            <Label Text="{Binding numeProprietate}"></Label>
-                            <StackLayout Padding="5">
-                                <Label Text="{Binding dataRezervare}"/>
-                                <Label Text="{Binding orasProprietate}"/>
-                                <Label Text="{Binding stradaProprietate}"/>
+                            <Label Text="{Binding numeProprietate}" TextColor="Black" FontSize="16" ></Label>
+                                <StackLayout Padding="5">
+                                    <Label Text="{Binding dataRezervare,StringFormat='Data rezervare: {0:MMMM dd, yyyy}'}"/>
+                                    <Label Text="{Binding orasProprietate, StringFormat='Localitate: {0}'}"/>
+                                    <Label>
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="Adresa: {0} {1}">
+                                                <Binding Path="stradaProprietate" />
+                                                <Binding Path="numarProprietate" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </StackLayout>
                             </StackLayout>
-                            <Label Text="{Binding idRezervare}"/>
-                        </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
