@@ -31,6 +31,14 @@ namespace BookingAPI.Controllers
             return Ok(x);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet("proprietate")]
+        public async Task<IActionResult> GetRezervariProprietate(int proprietateId)
+        {
+            var x = _rezervariManager.GetRezervariProrietate(proprietateId);
+            return Ok(x);
+        }
+
         [Authorize(Roles ="Basic, Admin")]
         [HttpPost]
         public async Task<IActionResult> UserAddRezervare(AddRezervareDTO rezervare)

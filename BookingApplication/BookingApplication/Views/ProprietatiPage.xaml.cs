@@ -27,49 +27,11 @@ namespace BookingApplication.Views
             _role = Role;
             _numeUtilizator = numeUtilizator;         
         }
-        public HttpClientHandler GetInsecureHandler()
-        {
-            HttpClientHandler handler = new HttpClientHandler();
-            handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-            return handler;
-        }
         protected override async void OnAppearing()        
         {
             base.OnAppearing();
             listView.ItemsSource = await ViewModel.CreateBindingContext();
-            //listView.ItemsSource
-            /*
-                List<Proprietate> prop= await ViewModel.GetProprietatiFromDatabase();
-            List<ProprietateOnePictureDTO> list = new List<ProprietateOnePictureDTO>();
-
-            HttpClientHandler ch = GetInsecureHandler();
-            HttpClient httpClient = new HttpClient(ch);
-            string RezervariUrll = "https://192.168.0.103:45455/api/Image/img?idProprietate={0}";
-
-            foreach (var p in prop)
-            {
-                ProprietateOnePictureDTO item = new ProprietateOnePictureDTO();
-                item.Id = p.Id;
-                item.Judet = p.Judet;
-                item.Numar = p.Numar;
-                item.Nume = p.Nume;
-                item.Oras = p.Oras;
-                item.Pret = p.Pret;
-                item.Strada = p.Strada;
-
-                // var imaginea = await httpClient.GetAsync(RezervariUrll);
-                // byte[] showing = await imaginea.Content.ReadAsByteArrayAsync();
-
-                // var stream1 = new MemoryStream(showing);
-                // var x = ImageSource.FromStream(() => stream1);
-                Uri uri = new Uri(String.Format(RezervariUrll, p.Id));
-                var imgPath = await httpClient.GetAsync(uri);
-                string content = await imgPath.Content.ReadAsStringAsync();
-                item.Imagine = content;
-                list.Add(item);
-            }
-            listView.ItemsSource = list;
-            */
+        
         }
 
         async void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

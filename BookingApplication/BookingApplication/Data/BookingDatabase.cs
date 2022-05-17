@@ -106,5 +106,15 @@ namespace BookingApplication.Data
         {
             return _userRestService.UpdateUserDetails(user);
         }
+
+        public Task<string> AddProprietate(AddProprietateDTO proprietate)
+        {
+            return _userRestService.AddProprietate(proprietate);
+        }
+
+        public Task<List<RezervariProprietateDTO>> GetRezervariProprietate(int proprietateId)
+        {
+            return _userRestService.GetRezervariProprietate(proprietateId);
+        }
     }
 }

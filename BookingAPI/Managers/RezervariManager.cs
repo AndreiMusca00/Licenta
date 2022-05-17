@@ -12,6 +12,7 @@ namespace BookingAPI.Managers
         Object UserRezervariHistory(int id);
         Task<string> UserAddRezervare(int userId, int proprietateId, DateTime data);
         Object AdminRezervariHistory(int id);
+        List<RezervariProprietateDTO> GetRezervariProrietate(int proprietateId);
     }
     public class RezervariManager : IRezervariManager
     {
@@ -42,6 +43,10 @@ namespace BookingAPI.Managers
        public  Object AdminRezervariHistory(int id)
         {
             return _rezervariRepository.AdminRezervariHistory(id);
+        }
+       public List<RezervariProprietateDTO> GetRezervariProrietate(int proprietateId)
+        {
+            return _rezervariRepository.GetRezervariProrietate(proprietateId);
         }
     }
 }

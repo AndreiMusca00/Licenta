@@ -28,6 +28,8 @@ namespace BookingApplication.Data
         Task<string> ChangePassword(string password);
         Task<UpdateUserDTO> GetConnectedUser();
         Task<string> UpdateUserDetails(UpdateUserDTO userDetails);
+        Task<string> AddProprietate(AddProprietateDTO proprietate);
+        Task<List<RezervariProprietateDTO>> GetRezervariProprietate(int proprietateId);
     }
 
     public class userRestService : IuserRestService
@@ -40,6 +42,7 @@ namespace BookingApplication.Data
         string ProprietatiUrl = "https://192.168.0.103:45455/api/Proprietati/all/{0}";
         string ProprietatiAdminUrl = "https://192.168.0.103:45455/api/Proprietati/{0}";
         string RezervariUrl = "https://192.168.0.103:45455/api/Rezervari/{0}";
+        string RezervariProprietateUrl = "https://192.168.0.103:45455/api/Rezervari/proprietate?proprietateId={0}";
         string ImagineUrl = "https://192.168.0.103:45455/api/Image/img?idProprietate={0}";
         string ChangePasswordUrl = "https://192.168.0.103:45455/api/User/password{0}";
         string ConnectedUserUrl = "https://192.168.0.103:45455/api/User/ConnectedUser";
@@ -245,6 +248,29 @@ namespace BookingApplication.Data
             {
                 return "fail";
             }
+        }
+        public async Task<string> AddProprietate(AddProprietateDTO proprietate)
+        {
+            Uri uri = new Uri(string.Format(ProprietatiAdminUrl,string.Empty));
+            string json = JsonConvert.SerializeObject(proprietate);
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+            var resposnse = await client.PostAsync(uri, content);
+            if (resposnse.IsSuccessStatusCode)
+            {
+                return "ok";
+            }
+            else
+            {
+                return "fail";
+            }
+        }
+        public async Task<List<RezervariProprietateDTO>> GetRezervariProprietate(int proprietateId)
+        {
+            Uri uri = new Uri(string.Format(RezervariProprietateUrl,proprietateId));
+            var response = await client.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
+            List<RezervariProprietateDTO> rezervari = JsonConvert.DeserializeObject<List<RezervariProprietateDTO>>(content);
+            return rezervari;
         }
     }
 }
