@@ -7,6 +7,21 @@ namespace BookingApplication.ViewModels
 {
     public class ProfilulMeuVM
     {
+        public Command LogoutCommand
+        {
+            get
+            {
+                return new Command(Logout);
+            }
+        }
+        private void Logout()
+        {
+            Application.Current.MainPage = new NavigationPage(new WelcomePage())
+            {
+                BarBackgroundColor = Color.Gray,
+                BarTextColor = Color.White
+            };
+        }
         public Command ChangePasswordCommand
         {
             get
