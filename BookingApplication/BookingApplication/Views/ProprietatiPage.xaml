@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:BookingApplication.ViewModels"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:sl="clr-namespace:Xamarin.RangeSlider.Forms;assembly=Xamarin.RangeSlider.Forms"
              x:Class="BookingApplication.Views.ProprietatiPage"
              Title="Proprietati Disponibile"
              BackgroundColor="LightGray">
@@ -9,8 +10,14 @@
 
     </ContentPage.ToolbarItems>
     <StackLayout>
-        <SearchBar x:Name="searchBar"  Placeholder="Introdu numele proprietății" TextChanged="searchBar_TextChanged" ></SearchBar>
-    <ListView x:Name="listView" Margin="20" HasUnevenRows="True" ItemSelected="listView_ItemSelected" >
+        <SearchBar x:Name="searchBar"  Placeholder="Introdu numele proprietății" TextChanged="searchBar_TextChanged"/>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Pret:" MinimumWidthRequest="60" FontSize="20" VerticalTextAlignment="Center" TextColor="Black" FontAttributes="Bold" Margin="10,0,10,0"></Label>
+            <sl:RangeSlider x:Name="rangeSlider" MinimumValue="50" MaximumValue="1000" StepValue="50" WidthRequest="300"  ShowTextAboveThumbs="True"
+                            LowerValue="50" UpperValue="1000" LowerValueChanged="rangeSliderChangedValue" UpperValueChanged="rangeSliderChangedValue"></sl:RangeSlider>
+        </StackLayout>
+        <Label x:Name="slider"></Label>
+        <ListView x:Name="listView" Margin="20" HasUnevenRows="True" ItemSelected="listView_ItemSelected" >
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>

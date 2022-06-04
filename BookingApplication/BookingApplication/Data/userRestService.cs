@@ -17,7 +17,6 @@ namespace BookingApplication.Data
     {
         Task<string> RegisterUserAsync(UserRegisterDTO user);
         Task<LoginToken> LoginUserAsync(UserLoginDTO user);
-        Task<List<Proprietate>> GetProprietati();
         Task<string> AddRezervare(int proprietateId, DateTime data);
         Task<List<GetRezervareUserDTO>> GetIstoricRezervariBasic();
         Task<List<Proprietate>> GetProprietatiAdmin();
@@ -30,7 +29,7 @@ namespace BookingApplication.Data
         Task<string> UpdateUserDetails(UpdateUserDTO userDetails);
         Task<string> AddProprietate(AddProprietateDTO proprietate);
         Task<List<RezervariProprietateDTO>> GetRezervariProprietate(int proprietateId);
-        Task<List<Proprietate>> GetProprietatiFiltered(string filter);
+        Task<List<Proprietate>> GetProprietatiFiltered(string filter, int lowerValue, int upperValue);
     }
 
     public class userRestService : IuserRestService
@@ -88,32 +87,13 @@ namespace BookingApplication.Data
             client.DefaultRequestHeaders.Authorization = authHeader;
             return token;
         }
-        public async Task<List<Proprietate>> GetProprietatiFiltered(string filter)
+        public async Task<List<Proprietate>> GetProprietatiFiltered(string filter,int lowerValue,int upperValue)
         {
-            string addUrl = "/Proprietati/all?filtru={0}";
+            string addUrl = "/Proprietati/all?filtru={0}&filtruPretMax={1}&filtruPretMin={2}";
             Proprietati = new List<Proprietate>();
-            Uri uri = new Uri(generalUrl + String.Format(addUrl,filter));
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    string content = await response.Content.ReadAsStringAsync();
-                    Proprietati = JsonConvert.DeserializeObject<List<Proprietate>>(content);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(@"\tERROR {0}", ex.Message);
-            }
-            return Proprietati;
-
-        }
-        public async Task<List<Proprietate>> GetProprietati()
-        {
-            string addUrl = "/Proprietati/all";
-            Proprietati = new List<Proprietate>();
-            Uri uri = new Uri(generalUrl+addUrl);
+            if (filter == null)
+                filter = "";
+            Uri uri = new Uri(generalUrl + String.Format(addUrl,filter,upperValue,lowerValue));
             try
             {
                 HttpResponseMessage response = await client.GetAsync(uri);

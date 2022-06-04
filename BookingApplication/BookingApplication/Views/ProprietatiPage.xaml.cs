@@ -12,6 +12,7 @@ using BookingApplication.Models;
 using BookingApplication.DTOs;
 using System.Net.Http;
 using System.IO;
+using Xamarin.RangeSlider.Forms;
 
 namespace BookingApplication.Views
 {
@@ -30,8 +31,7 @@ namespace BookingApplication.Views
         protected override async void OnAppearing()        
         {
             base.OnAppearing();
-            listView.ItemsSource = await ViewModel.CreateBindingContext();
-        
+            listView.ItemsSource= await ViewModel.CreateFilteredBindingContext(searchBar.Text, Convert.ToInt32(rangeSlider.LowerValue), Convert.ToInt32(rangeSlider.UpperValue));
         }
 
         async void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -52,7 +52,13 @@ namespace BookingApplication.Views
 
         private async void searchBar_TextChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            listView.ItemsSource = await ViewModel.CreateFilteredBindingContext(searchBar.Text);
+            listView.ItemsSource = await ViewModel.CreateFilteredBindingContext(searchBar.Text,Convert.ToInt32(rangeSlider.LowerValue),Convert.ToInt32(rangeSlider.UpperValue));
+        }
+
+        private async void rangeSliderChangedValue(object sender, EventArgs e)
+        {
+            slider.Text = rangeSlider.LowerValue.ToString()+" "+rangeSlider.UpperValue.ToString();
+            listView.ItemsSource = await ViewModel.CreateFilteredBindingContext(searchBar.Text, Convert.ToInt32(rangeSlider.LowerValue), Convert.ToInt32(rangeSlider.UpperValue));
         }
     }
 }

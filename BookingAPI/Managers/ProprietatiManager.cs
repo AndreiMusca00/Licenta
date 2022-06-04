@@ -11,7 +11,7 @@ namespace BookingAPI.Managers
     public interface IProprietatiManager
     {
         Task<Proprietate> AddProprietate(AddProprietateDTO prop,int userId);
-        Task<List<Proprietate>> GetProprietati(int userId, string? filtru);
+        Task<List<Proprietate>> GetProprietati(int userId, string filtru,int? filtruPretMax,int? filtruPretMin);
         Task<Proprietate> DeleteProprietate(int id);
         Task<bool> FindById(int idProprietate);
         Task<List<Proprietate>> GetPropByUserId(int userId);
@@ -30,13 +30,17 @@ namespace BookingAPI.Managers
         {         
             return await _proprietatiRepository.AddProprietate(prop, userId);
         }
-        public async Task<List<Proprietate>> GetProprietati(int userId, string? filtru)
+        public async Task<List<Proprietate>> GetProprietati(int userId, string filtru,int? filtruPretMax, int? filtruPretMin)
         {
 
             List<Proprietate> proprietati = await _proprietatiRepository.GetProprietati();
             proprietati.RemoveAll(x => x.userId == userId);
             if(filtru != null)
                 proprietati.RemoveAll(x => !x.Nume.ToLower().Contains(filtru.ToLower()));
+            if (filtruPretMax.HasValue)
+                proprietati.RemoveAll(x => x.Pret > filtruPretMax);
+            if (filtruPretMin.HasValue)
+                proprietati.RemoveAll(x => x.Pret < filtruPretMin);
             return proprietati;
         }
         public async Task<Proprietate> GetProprietate(int proprietateId)

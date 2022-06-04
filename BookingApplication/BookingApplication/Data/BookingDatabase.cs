@@ -50,13 +50,9 @@ namespace BookingApplication.Data
         {
             return restService.DeleteUserAsync(item.ID);
         }
-        public Task<List<Proprietate>> GetProprietati()
+        public Task<List<Proprietate>> GetProprietatiFiltered(string filter,int lowerValue,int upperValue)
         {
-            return _userRestService.GetProprietati();
-        }
-        public Task<List<Proprietate>> GetProprietatiFiltered(string filter)
-        {
-            return _userRestService.GetProprietatiFiltered(filter);
+            return _userRestService.GetProprietatiFiltered(filter,lowerValue,upperValue);
         }
         public Task<string> AddRezervare(int proprietateId,DateTime dataRezervare)
         {

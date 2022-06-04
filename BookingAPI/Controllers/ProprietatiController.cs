@@ -25,17 +25,27 @@ namespace BookingAPI.Controllers
     
         [AllowAnonymous]
         [HttpGet("all")]
-        public async Task<IActionResult> GetProprietati(string? filtru)
+        public async Task<IActionResult> GetProprietati(string filtru,int? filtruPretMax, int? filtruPretMin)
         {
             int idUser = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
             List<Proprietate> pr=new List<Proprietate>();
-            if (filtru == null)
+            bool stringFilter = false;
+            if (filtru != null)
+                stringFilter = true;
+            switch ((stringFilter, filtruPretMax, filtruPretMin))
             {
-                pr = await _proprietatiManager.GetProprietati(idUser,null); 
-            }
-            else
-            {
-                pr= await _proprietatiManager.GetProprietati(idUser,filtru);
+                case (false, >0, >0):
+                    pr = await _proprietatiManager.GetProprietati(idUser, null, filtruPretMax, filtruPretMin);
+                    break;
+                case (true, > 0, > 0):
+                    pr = await _proprietatiManager.GetProprietati(idUser, filtru, filtruPretMax, filtruPretMin);
+                    break;
+                case (true, null, null):
+                    pr = await _proprietatiManager.GetProprietati(idUser, filtru, null, null);
+                    break;
+                default:
+                    pr = await _proprietatiManager.GetProprietati(idUser, null, null, null);
+                    break;
             }
             if (pr != null)
                 return Ok(pr);
