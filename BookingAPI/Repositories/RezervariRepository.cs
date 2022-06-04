@@ -11,7 +11,8 @@ namespace BookingAPI.Repositories
     List<GetRezervareUserDTO> UserRezervariHistory(int id);
         Task<Rezervare> UserAddRezervare(int userId, int proprietateId,DateTime data);
         Object AdminRezervariHistory(int id);
-        List<RezervariProprietateDTO> GetRezervariProrietate(int proprietateId);
+        List<RezervariProprietateDTO> GetRezervariProprietate(int proprietateId);
+        List<Rezervare> AllRezervationsOfAProperty(int proprietateId);
     }
 
     public class RezervariRepository : IRezervariRepository
@@ -21,7 +22,7 @@ namespace BookingAPI.Repositories
         {
             _context = context;
         }
-        public List<RezervariProprietateDTO> GetRezervariProrietate(int proprietateId)
+        public List<RezervariProprietateDTO> GetRezervariProprietate(int proprietateId)
         {
             List<RezervariProprietateDTO> rezervari = new List<RezervariProprietateDTO>();
             var rez = _context.Rezervare.Where(x => x.proprietateId == proprietateId).Join
@@ -140,6 +141,11 @@ namespace BookingAPI.Repositories
                 ToList();
 
             return rez;
+        }
+
+        public List<Rezervare> AllRezervationsOfAProperty(int proprietateId)
+        {
+            return _context.Rezervare.Where(rez => rez.proprietateId == proprietateId).ToList();
         }
 
     }

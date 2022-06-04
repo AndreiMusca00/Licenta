@@ -28,6 +28,10 @@ namespace BookingApplication.Views
             {
                 await Navigation.PopModalAsync();
             }
+            else
+            {
+                await DisplayAlert("Proprietatea este deja rezervata pentru data alesa!", "Selectati alta data","Cancel");
+            }
         }
 
         private async void btnCancel_Clicked(object sender, EventArgs e)

@@ -24,8 +24,13 @@ namespace BookingAPI.Managers
 
         public async Task<string> UserAddRezervare(int userId, int proprietateId, DateTime data)
         {
-            DateTime checkDate = data;
-            if (checkDate > DateTime.Today)
+            var rezervari = _rezervariRepository.AllRezervationsOfAProperty(proprietateId);
+            foreach(Rezervare rez in rezervari)
+            {
+                if (rez.Data == data)
+                    return "Data introdusa e deja rezervata";
+            }
+            if (data > DateTime.Today)
             {
                 await _rezervariRepository.UserAddRezervare(userId, proprietateId, data);
                 return "Succes";
@@ -36,7 +41,7 @@ namespace BookingAPI.Managers
             }
             
         }
-        public Object UserRezervariHistory(int id)
+       public Object UserRezervariHistory(int id)
         {
             return _rezervariRepository.UserRezervariHistory(id);
         }
@@ -46,7 +51,7 @@ namespace BookingAPI.Managers
         }
        public List<RezervariProprietateDTO> GetRezervariProrietate(int proprietateId)
         {
-            return _rezervariRepository.GetRezervariProrietate(proprietateId);
+            return _rezervariRepository.GetRezervariProprietate(proprietateId);
         }
     }
 }
