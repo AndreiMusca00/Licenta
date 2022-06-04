@@ -19,7 +19,16 @@ namespace BookingApplication.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs("Password"));
             }
         }
-
+        private string password2;
+        public string Password2
+        {
+            get { return password2; }
+            set
+            {
+                password2 = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("Password2"));
+            }
+        }
         //change pass with pass as parameter 
         public Command ChangePasswordCommand
         {
@@ -32,6 +41,8 @@ namespace BookingApplication.ViewModels
         {
             if (string.IsNullOrEmpty(Password))
                 await App.Current.MainPage.DisplayAlert("Empty Values!", " Please enter a valid password", "OK");
+            if(Password!=Password2)
+                await App.Current.MainPage.DisplayAlert("Passwords don't match!", " Please try again!", "OK");
             else
             {
                 var response = await App.Database.ChangePassword(Password);

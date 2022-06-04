@@ -6,10 +6,9 @@ using BookingApplication.DTOs;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using System.IO;
 using System.Net.Http.Headers;
-using System.IdentityModel.Tokens.Jwt;
 using BookingAPI.DTOs;
+using System.Linq;
 
 namespace BookingApplication.Data
 {
@@ -149,7 +148,8 @@ namespace BookingApplication.Data
             {
                 Console.WriteLine(@"\tERROR {0}", ex.Message);
             }
-            return Rezervari;
+        
+            return Rezervari.OrderByDescending(o=>o.dataRezervare).ToList();
         }
         public async Task<List<Proprietate>> GetProprietatiAdmin()
         {
