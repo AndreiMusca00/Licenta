@@ -13,7 +13,7 @@ namespace BookingApplication
         {
             InitializeComponent();
             
-           Database = new BookingDatabase(new RestService(),new userRestService());
+           Database = new BookingDatabase(new userRestService());
            MainPage = new NavigationPage(new WelcomePage()) {
                BarBackgroundColor = Color.Gray,
              BarTextColor = Color.White

@@ -10,11 +10,10 @@ namespace BookingApplication.Data
 {
     public class BookingDatabase
     {
-        IRestService restService;
+        
         IuserRestService _userRestService;
-        public BookingDatabase(IRestService service, IuserRestService iuserRestService)
+        public BookingDatabase( IuserRestService iuserRestService)
         {
-            restService = service;
             _userRestService = iuserRestService;
         }
         //user rest service 
@@ -38,18 +37,6 @@ namespace BookingApplication.Data
          * 
          */
 
-        public Task<List<Users>> GetUsersAsync()
-        {
-            return restService.RefreshDataAsync();
-        }
-        public Task SaveUserAsync(Users item, bool isNewItem = true)
-        {
-            return restService.SaveUserAsync(item, isNewItem);
-        }
-        public Task DeleteUserAsync(Users item)
-        {
-            return restService.DeleteUserAsync(item.ID);
-        }
         public Task<List<Proprietate>> GetProprietatiFiltered(string filter,int lowerValue,int upperValue)
         {
             return _userRestService.GetProprietatiFiltered(filter,lowerValue,upperValue);
