@@ -13,7 +13,9 @@ namespace BookingApplication.ViewModels
        
         public async Task<List<Proprietate>> GetProprietatiFromDatabase()
         {
-           list = await App.Database.GetProprietati();
+            list = null;
+            proprietati = new List<ProprietateOnePictureDTO>();
+            list = await App.Database.GetProprietati();
            return list;
         }
         public async Task<List<ProprietateOnePictureDTO>> CreateBindingContext()
@@ -33,6 +35,31 @@ namespace BookingApplication.ViewModels
                 proprietati.Add(item);
             }
             return proprietati ;
+        }
+        public async Task<List<ProprietateOnePictureDTO>> CreateFilteredBindingContext(string filter)
+        {
+            await GetProprietatiFilteredFromDatabase(filter);
+            foreach (var p in list)
+            {
+                ProprietateOnePictureDTO item = new ProprietateOnePictureDTO();
+                item.Id = p.Id;
+                item.Judet = p.Judet;
+                item.Numar = p.Numar;
+                item.Nume = p.Nume;
+                item.Oras = p.Oras;
+                item.Pret = p.Pret;
+                item.Strada = p.Strada;
+                item.Imagine = await App.Database.GetOneImagePath(p.Id);
+                proprietati.Add(item);
+            }
+            return proprietati;
+        }
+        public async Task<List<Proprietate>> GetProprietatiFilteredFromDatabase(string filter)
+        {
+            list = null;
+            proprietati = new List<ProprietateOnePictureDTO>();
+            list = await App.Database.GetProprietatiFiltered(filter);
+            return list;
         }
 
 

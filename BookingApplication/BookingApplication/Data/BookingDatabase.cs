@@ -40,7 +40,6 @@ namespace BookingApplication.Data
 
         public Task<List<Users>> GetUsersAsync()
         {
-            
             return restService.RefreshDataAsync();
         }
         public Task SaveUserAsync(Users item, bool isNewItem = true)
@@ -51,10 +50,13 @@ namespace BookingApplication.Data
         {
             return restService.DeleteUserAsync(item.ID);
         }
-        //vizualizare proprietate 
         public Task<List<Proprietate>> GetProprietati()
         {
             return _userRestService.GetProprietati();
+        }
+        public Task<List<Proprietate>> GetProprietatiFiltered(string filter)
+        {
+            return _userRestService.GetProprietatiFiltered(filter);
         }
         public Task<string> AddRezervare(int proprietateId,DateTime dataRezervare)
         {

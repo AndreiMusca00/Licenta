@@ -25,16 +25,23 @@ namespace BookingAPI.Controllers
     
         [AllowAnonymous]
         [HttpGet("all")]
-        public async Task<IActionResult> GetProprietati()
+        public async Task<IActionResult> GetProprietati(string? filtru)
         {
-            var pr = await _proprietatiManager.GetProprietati();
-            if (pr != null)
+            int idUser = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            List<Proprietate> pr=new List<Proprietate>();
+            if (filtru == null)
             {
-                return Ok(pr);
-            }else
-            {
-                return BadRequest();
+                pr = await _proprietatiManager.GetProprietati(idUser,null); 
             }
+            else
+            {
+                pr= await _proprietatiManager.GetProprietati(idUser,filtru);
+            }
+            if (pr != null)
+                return Ok(pr);
+            else
+                return BadRequest();
+            
         }
         [Authorize(Roles ="Admin")]
         [HttpDelete("{id}")]

@@ -21,7 +21,7 @@
                 <Label Grid.Row="4" Grid.Column="0" Text="Numar:" TextColor="Black" FontSize="18"/>
                 <Entry Grid.Row="4" Grid.Column="1"  Text="{Binding Numar}"/>
 
-                <Label Grid.Row="5" Grid.Column="0" Text="Numar:" TextColor="Black" FontSize="18"/>
+                <Label Grid.Row="5" Grid.Column="0" Text="Pret:" TextColor="Black" FontSize="18"/>
                 <Entry Grid.Row="5" Grid.Column="1"  Text="{Binding Pret}"/>
 
                 

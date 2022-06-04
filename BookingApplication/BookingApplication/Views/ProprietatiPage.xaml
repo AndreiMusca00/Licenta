@@ -8,7 +8,8 @@
         <ToolbarItem Text="ProfilulMeu" Clicked="ToolbarItem_Clicked" />
 
     </ContentPage.ToolbarItems>
-
+    <StackLayout>
+        <SearchBar x:Name="searchBar"  Placeholder="Introdu numele proprietății" TextChanged="searchBar_TextChanged" ></SearchBar>
     <ListView x:Name="listView" Margin="20" HasUnevenRows="True" ItemSelected="listView_ItemSelected" >
         <ListView.ItemTemplate>
             <DataTemplate>
@@ -32,4 +33,5 @@
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
+    </StackLayout>
 </ContentPage>

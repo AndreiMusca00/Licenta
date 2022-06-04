@@ -47,6 +47,12 @@ namespace BookingApplication.Views
         private async void ToolbarItem_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new ProfilulMeuPage(_role,_numeUtilizator));
+            searchBar.Text = "";
+        }
+
+        private async void searchBar_TextChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            listView.ItemsSource = await ViewModel.CreateFilteredBindingContext(searchBar.Text);
         }
     }
 }

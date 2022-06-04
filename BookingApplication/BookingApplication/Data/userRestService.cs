@@ -30,35 +30,27 @@ namespace BookingApplication.Data
         Task<string> UpdateUserDetails(UpdateUserDTO userDetails);
         Task<string> AddProprietate(AddProprietateDTO proprietate);
         Task<List<RezervariProprietateDTO>> GetRezervariProprietate(int proprietateId);
+        Task<List<Proprietate>> GetProprietatiFiltered(string filter);
     }
 
     public class userRestService : IuserRestService
     {
         HttpClient client;
-        //se va modifica ulterior cu ip-ul si portul corespunzator
-
-        string RegisterUrl = "https://192.168.0.103:45455/api/User/Register/{0}";
-        string LoginUrl = "https://192.168.0.103:45455/api/User/Login/{0}";
-        string ProprietatiUrl = "https://192.168.0.103:45455/api/Proprietati/all/{0}";
-        string ProprietatiAdminUrl = "https://192.168.0.103:45455/api/Proprietati/{0}";
-        string RezervariUrl = "https://192.168.0.103:45455/api/Rezervari/{0}";
-        string RezervariProprietateUrl = "https://192.168.0.103:45455/api/Rezervari/proprietate?proprietateId={0}";
-        string ImagineUrl = "https://192.168.0.103:45455/api/Image/img?idProprietate={0}";
-        string ChangePasswordUrl = "https://192.168.0.103:45455/api/User/password{0}";
-        string ConnectedUserUrl = "https://192.168.0.103:45455/api/User/ConnectedUser";
-        string UpdateUserDetailsUrl = "https://192.168.0.103:45455/api/User/user";
-
+        string generalUrl = "https://192.168.0.105:45455/api";
         public List<Proprietate> Proprietati;
         public List<GetRezervareUserDTO> Rezervari;
+
         public userRestService()
         {
             var httpClientHandler = new HttpClientHandler();
             httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; };
             client = new HttpClient(httpClientHandler);
         }
+
         public async Task<string> RegisterUserAsync(UserRegisterDTO user)
         {
-            Uri uri = new Uri(string.Format(RegisterUrl, string.Empty));
+            string addUrl = "/User/Register";
+            Uri uri = new Uri(generalUrl+addUrl);
             try
             {
                 string json = JsonConvert.SerializeObject(user);
@@ -83,7 +75,8 @@ namespace BookingApplication.Data
         }
         public async Task<LoginToken> LoginUserAsync(UserLoginDTO user)
         {
-            Uri uri = new Uri(string.Format(LoginUrl, string.Empty));
+            string addUrl = "/User/Login";
+            Uri uri = new Uri(generalUrl+addUrl);
             string json = JsonConvert.SerializeObject(user);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -91,18 +84,36 @@ namespace BookingApplication.Data
             response = await client.PostAsync(uri, content);
             string x = await response.Content.ReadAsStringAsync();
             LoginToken token = JsonConvert.DeserializeObject<LoginToken>(x);
-            //adaugare token in header 
-            //var handler = new JwtSecurityTokenHandler();
-           // var tokenn = handler.ReadJwtToken(token.Token);
-            
             var authHeader = new AuthenticationHeaderValue("bearer", token.Token);
             client.DefaultRequestHeaders.Authorization = authHeader;
             return token;
         }
+        public async Task<List<Proprietate>> GetProprietatiFiltered(string filter)
+        {
+            string addUrl = "/Proprietati/all?filtru={0}";
+            Proprietati = new List<Proprietate>();
+            Uri uri = new Uri(generalUrl + String.Format(addUrl,filter));
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    Proprietati = JsonConvert.DeserializeObject<List<Proprietate>>(content);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(@"\tERROR {0}", ex.Message);
+            }
+            return Proprietati;
+
+        }
         public async Task<List<Proprietate>> GetProprietati()
         {
+            string addUrl = "/Proprietati/all";
             Proprietati = new List<Proprietate>();
-            Uri uri = new Uri(string.Format(ProprietatiUrl, string.Empty));
+            Uri uri = new Uri(generalUrl+addUrl);
             try
             {
                 HttpResponseMessage response = await client.GetAsync(uri);
@@ -121,11 +132,11 @@ namespace BookingApplication.Data
         }
         public async Task<string> AddRezervare(int proprietateId, DateTime data)
         {
-           
+            string addUrl = "/Rezervari";
             AddRezervareDTO rezervare = new AddRezervareDTO();
             rezervare.dataRezervare = data;
             rezervare.proprietateId = proprietateId;
-            Uri uri = new Uri(string.Format(RezervariUrl,string.Empty));
+            Uri uri = new Uri(generalUrl + addUrl);
             string json = JsonConvert.SerializeObject(rezervare);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -142,8 +153,9 @@ namespace BookingApplication.Data
         }
         public async Task<List<GetRezervareUserDTO>> GetIstoricRezervariBasic()
         {
+            string addUrl = "/Rezervari";
             Rezervari = new List<GetRezervareUserDTO>();
-            Uri uri = new Uri(string.Format(RezervariUrl, string.Empty));
+            Uri uri = new Uri(generalUrl+addUrl);
             try
             {
                 HttpResponseMessage response = await client.GetAsync(uri);
@@ -161,8 +173,9 @@ namespace BookingApplication.Data
         }
         public async Task<List<Proprietate>> GetProprietatiAdmin()
         {
+            string addUrl = "/Proprietati";
             Proprietati = new List<Proprietate>();
-            Uri uri = new Uri(string.Format(ProprietatiAdminUrl, string.Empty));
+            Uri uri = new Uri(generalUrl+addUrl);
             try
             {
                 HttpResponseMessage response = await client.GetAsync(uri);
@@ -180,7 +193,8 @@ namespace BookingApplication.Data
         }
         public async Task<string> GetOneImage(int proprietateId)
         {
-            Uri uri = new Uri(String.Format(ImagineUrl, proprietateId));
+            string addUrl = "/Image/img?idProprietate={0}";
+            Uri uri = new Uri(generalUrl+ String.Format(addUrl, proprietateId));
             var response  = await client.GetAsync(uri);
             string imaginePath = await response.Content.ReadAsStringAsync();
             if (imaginePath != "empty")
@@ -193,8 +207,8 @@ namespace BookingApplication.Data
         }
         public async Task<List<string>> GetImages(int proprietateId)
         {
-            string ImagineUrl = "https://192.168.0.103:45455/api/Image/{1}?idProprietate={0}";
-            Uri uri = new Uri(String.Format(ImagineUrl,proprietateId, "imagini"));
+            string addUrl = "/Image/{1}?idProprietate={0}";
+            Uri uri = new Uri(generalUrl + String.Format(addUrl, proprietateId, "imagini"));
             var response = await client.GetAsync(uri);
             var content  = await response.Content.ReadAsStringAsync();
             List<string> paths = JsonConvert.DeserializeObject<List<string>>(content);
@@ -202,8 +216,8 @@ namespace BookingApplication.Data
         }
         public async Task<Proprietate> GetProprietate(int proprietateId)
         {
-            string GetProprietateUrl = "https://192.168.0.103:45455/api/Proprietati/proprietateId?proprietateId={0}";
-            Uri uri = new Uri(String.Format(GetProprietateUrl, proprietateId));
+            string addUrl = "/Proprietati/proprietateId?proprietateId={0}";
+            Uri uri = new Uri(generalUrl+ String.Format(addUrl, proprietateId));
             var response = await client.GetAsync(uri);
             var content = await response.Content.ReadAsStringAsync();
             Proprietate proprietate = JsonConvert.DeserializeObject<Proprietate>(content);
@@ -211,7 +225,8 @@ namespace BookingApplication.Data
         }
         public async Task<string> ChangePassword(string password)
         {
-            Uri uri = new Uri(string.Format(ChangePasswordUrl,string.Empty));
+            string addUrl = "/User/password";
+            Uri uri = new Uri(generalUrl+addUrl);
             UserLoginDTO user = new UserLoginDTO();
             user.Password = password;
 
@@ -229,7 +244,8 @@ namespace BookingApplication.Data
         }
         public async Task<UpdateUserDTO> GetConnectedUser()
         {
-            Uri uri = new Uri(ConnectedUserUrl);
+            string addUrl = "/User/ConnectedUser";
+            Uri uri = new Uri(generalUrl+addUrl);
             var response = await client.GetAsync(uri);
             string content = await response.Content.ReadAsStringAsync();
             UpdateUserDTO connectedUser = JsonConvert.DeserializeObject<UpdateUserDTO>(content);
@@ -237,7 +253,8 @@ namespace BookingApplication.Data
         }
         public async Task<string> UpdateUserDetails(UpdateUserDTO userDetails)
         {
-            Uri uri = new Uri(UpdateUserDetailsUrl);
+            string addUrl = "/User/user";
+            Uri uri = new Uri(generalUrl+addUrl);
             string json = JsonConvert.SerializeObject(userDetails);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
             var resposnse = await client.PostAsync(uri, content);
@@ -251,7 +268,8 @@ namespace BookingApplication.Data
         }
         public async Task<string> AddProprietate(AddProprietateDTO proprietate)
         {
-            Uri uri = new Uri(string.Format(ProprietatiAdminUrl,string.Empty));
+            string addUrl = "/Proprietati";
+            Uri uri = new Uri(generalUrl+addUrl);
             string json = JsonConvert.SerializeObject(proprietate);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
             var resposnse = await client.PostAsync(uri, content);
@@ -266,7 +284,8 @@ namespace BookingApplication.Data
         }
         public async Task<List<RezervariProprietateDTO>> GetRezervariProprietate(int proprietateId)
         {
-            Uri uri = new Uri(string.Format(RezervariProprietateUrl,proprietateId));
+            string addUrl = "/Rezervari/proprietate?proprietateId={0}";
+            Uri uri = new Uri(generalUrl+ String.Format(addUrl, proprietateId));
             var response = await client.GetAsync(uri);
             var content = await response.Content.ReadAsStringAsync();
             List<RezervariProprietateDTO> rezervari = JsonConvert.DeserializeObject<List<RezervariProprietateDTO>>(content);
