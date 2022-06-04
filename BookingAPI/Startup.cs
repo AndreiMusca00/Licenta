@@ -53,6 +53,8 @@ namespace BookingAPI
             services.AddScoped<IRezervariManager, RezervariManager>();
             services.AddScoped<IImageManager, ImageManager>();
             services.AddScoped<IImageRespository, ImageRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+            services.AddScoped<IReviewManager, ReviewManager>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters

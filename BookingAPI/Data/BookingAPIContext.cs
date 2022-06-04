@@ -14,11 +14,11 @@ namespace BookingAPI.Data
         {
         }
 
-        public DbSet<BookingAPI.Models.Users> Users { get; set; }
         public DbSet<BookingAPI.Models.User> User { get; set; }
         public DbSet<BookingAPI.Models.Proprietate> Proprietate { get; set; }
         public DbSet<BookingAPI.Models.Rezervare> Rezervare { get; set; }
         public DbSet<BookingAPI.Models.Image> Imagine { get; set; }
+        public DbSet<BookingAPI.Models.Review> Review { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().Property(user => user.Role)
