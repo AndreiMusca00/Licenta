@@ -8,26 +8,35 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Padding="5" Orientation="Horizontal" >
-                                <StackLayout>
-                                    <Label Text="Nume:" TextColor="Black" FontSize="15" FontAttributes="Bold"></Label>
-                                <Label TextColor="Black" FontSize="15">
-                                    <Label.Text>
-                                        <MultiBinding StringFormat=".{0} {1}">
-                                            <Binding Path="nume" />
-                                            <Binding Path="prenume" />
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
-                                    <Label Text="{Binding telefon, StringFormat='Telefon: {0}'}" TextColor="Black" FontSize="15" ></Label>
+                            <SwipeView>
+                                <SwipeView.LeftItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Delete" BackgroundColor="Red" CommandParameter="{Binding idRezervare}" Invoked="SwipeItem_Invoked">
+
+                                        </SwipeItem>
+                                    </SwipeItems>
+                                </SwipeView.LeftItems>
+                                <StackLayout Padding="5" Orientation="Horizontal" >
+                                    <StackLayout>
+                                        <Label Text="Nume:" TextColor="Black" FontSize="15" FontAttributes="Bold"></Label>
+                                        <Label TextColor="Black" FontSize="15">
+                                            <Label.Text>
+                                                <MultiBinding StringFormat=".{0} {1}">
+                                                    <Binding Path="nume" />
+                                                    <Binding Path="prenume" />
+                                                </MultiBinding>
+                                            </Label.Text>
+                                        </Label>
+                                        <Label Text="{Binding telefon, StringFormat='Telefon: {0}'}" TextColor="Black" FontSize="15" ></Label>
+                                    </StackLayout>
+
+                                    <StackLayout Padding="5">
+                                        <Label Text="{Binding dataRezervare,StringFormat='Data rezervare: {0:MMMM dd, yyyy}'}" TextColor="Black" FontSize="18"/>
+                                        <Label Text="{Binding mail, StringFormat='Mail: {0}'}" TextColor="Black" FontSize="15"/>
+
+                                    </StackLayout>
                                 </StackLayout>
-                                
-                                <StackLayout Padding="5">
-                                    <Label Text="{Binding dataRezervare,StringFormat='Data rezervare: {0:MMMM dd, yyyy}'}" TextColor="Black" FontSize="18"/>
-                                    <Label Text="{Binding mail, StringFormat='Mail: {0}'}" TextColor="Black" FontSize="15"/>
-                                    
-                                </StackLayout>
-                            </StackLayout>
+                            </SwipeView>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

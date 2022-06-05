@@ -15,7 +15,6 @@ namespace BookingApplication.Views
     {
         RezervariProprietateVM viewModel = new RezervariProprietateVM();
         public int _proprietateId;
-        //List<RezervariProprietateDTO> mock = new List<RezervariProprietateDTO>();
         public RezervariProprietatePage(int id)
         {
             InitializeComponent();
@@ -24,19 +23,15 @@ namespace BookingApplication.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            /*
-            RezervariProprietateDTO  r = new RezervariProprietateDTO()
-            {
-                dataRezervare = DateTime.Today,
-                mail = "sada",
-                nume = "ASdad",
-                prenume = "asdajdashfkjsf",
-                telefon = "0752279403"
-            };
-            for(int i=0;i<10;i++)
-                mock.Add(r);*/
             listView.ItemsSource = await viewModel.GetProprietatiFromDatabase(_proprietateId);
-
+        }
+        private async void SwipeItem_Invoked(object sender, EventArgs e)
+        {
+            string id = ((MenuItem)sender).CommandParameter.ToString();
+            int idBun = Convert.ToInt32(id);
+            var response = await App.Database.DeleteRezervare(idBun);
+            if (response == "ok")
+                listView.ItemsSource = await viewModel.GetProprietatiFromDatabase(_proprietateId);
         }
     }
 }

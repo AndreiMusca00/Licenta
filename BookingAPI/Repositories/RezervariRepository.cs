@@ -33,6 +33,7 @@ namespace BookingAPI.Repositories
                     rezervare => rezervare.userId,
                     user => user.Id, (rezervare,user) => new
                     { 
+                        idRezervare = rezervare.Id,
                         dataRezervare = rezervare.Data,
                         userNume = user.Nume,
                         userPrenume = user.Prenume,
@@ -47,6 +48,7 @@ namespace BookingAPI.Repositories
                 rezervare.prenume = variabila.userPrenume;
                 rezervare.mail = variabila.userMail;
                 rezervare.telefon = variabila.userTelefon;
+                rezervare.idRezervare = variabila.idRezervare;
                 rezervari.Add(rezervare);
             }
             return rezervari;
