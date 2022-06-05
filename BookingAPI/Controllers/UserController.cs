@@ -38,7 +38,7 @@ namespace BookingAPI.Controllers
         public async Task<IActionResult> Register(UserRegisterDTO request)
         {
             int response = await _userRepository.Register(
-                new User { Username = request.Username, Mail=request.Mail, Nume=request.Nume, Prenume=request.Prenume}, request.Password);
+                new User { Username = request.Username, Mail=request.Mail, Nume=request.Nume, Prenume=request.Prenume, Telefon=request.Telefon}, request.Password);
             if (response != -1)
             { 
                 return Ok(response);

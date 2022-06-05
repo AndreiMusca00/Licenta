@@ -10,6 +10,7 @@ namespace BookingApplication.DTOs
         public string Password { get; set; }
         public string Mail { get; set; }
         public string Nume { get; set; }
+        public string Telefon { get; set; }
         public string Prenume { get; set; }
     }
 }

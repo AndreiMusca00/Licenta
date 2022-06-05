@@ -16,27 +16,28 @@
             <Label Text="Register" Padding="0,20,0,0" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" TextColor="Black"></Label>
             <Grid Margin="40,20,0,0">
                 <Label Grid.Row="0" Grid.Column="0" Text="Username:" TextColor="Black" FontSize="18"/>
-                <Entry x:Name="entryUsername" Grid.Row="0" Grid.Column="1" />
+                <Entry x:Name="entryUsername" Grid.Row="0" Grid.Column="1" Text="{Binding UserName}" />
                 
                 <Label Grid.Row="1" Grid.Column="0" Text="Nume:" TextColor="Black" FontSize="18"/>
-                <Entry x:Name="entryNume" Grid.Row="1" Grid.Column="1"></Entry>
+                <Entry x:Name="entryNume" Grid.Row="1" Grid.Column="1" Text="{Binding Nume}"></Entry>
                 
                 <Label Grid.Row="2" Grid.Column="0" Text="Prenume:" TextColor="Black" FontSize="18"/>
-                <Entry x:Name="entryPrenume" Grid.Row="2" Grid.Column="1"/>
+                <Entry x:Name="entryPrenume" Grid.Row="2" Grid.Column="1" Text="{Binding Prenume}"/>
 
                 <Label Grid.Row="3" Grid.Column="0" Text="Email:" TextColor="Black" FontSize="18"/>
-                <Entry x:Name="entryEmail" Grid.Row="3" Grid.Column="1">
+                <Entry x:Name="entryEmail" Grid.Row="3" Grid.Column="1" Text="{Binding Mail}">
                     <Entry.Behaviors>
                         <xct:EmailValidationBehavior InvalidStyle="{StaticResource InvalidStyle}"/>
                     </Entry.Behaviors>
                 </Entry>
-
-                <Label x:Name="lblParola" Grid.Row="4" Grid.Column="0" Text="Parola:" TextColor="Black" FontSize="18"/>
-                <Entry x:Name="entryPassword" Grid.Row="4" Grid.Column="1" IsPassword="True" />
-                <CheckBox x:Name="checkSeePassword" Grid.Row="4" Grid.Column="2" IsChecked="False"
+                <Label Grid.Row="4" Grid.Column="0" Text="Telefon:" TextColor="Black" FontSize="18"/>
+                <Entry x:Name="entryTelefon" Grid.Row="4" Grid.Column="1" Text="{Binding Telefon}" />
+                <Label x:Name="lblParola" Grid.Row="5" Grid.Column="0" Text="Parola:" TextColor="Black" FontSize="18"/>
+                <Entry x:Name="entryPassword" Grid.Row="5" Grid.Column="1" IsPassword="True" Text="{Binding Password}"/>
+                <CheckBox x:Name="checkSeePassword" Grid.Row="5" Grid.Column="2" IsChecked="False"
                           Color="Black" CheckedChanged="checkSeePassword_CheckedChanged"></CheckBox>
             </Grid>
-            <Button Text="Register" Clicked="Button_Clicked" CornerRadius="20" WidthRequest="200" HorizontalOptions="Center" BackgroundColor="Gray"/>
+            <Button Text="Register" Command="{Binding RegisterCommand}" CornerRadius="20" WidthRequest="200" HorizontalOptions="Center" BackgroundColor="Gray"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
