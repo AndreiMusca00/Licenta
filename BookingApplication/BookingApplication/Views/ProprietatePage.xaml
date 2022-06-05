@@ -22,6 +22,7 @@
                 <Label Text="{Binding Pret, StringFormat='Pret/noapte: {0}'}"/>
             </StackLayout>
             <Button x:Name="btnAdd" Text="Adauga rezervare" Clicked="Button_Clicked" HeightRequest="50" WidthRequest="160" CornerRadius="30" BackgroundColor="Gray"/>
+            <Button x:Name="btnSeeReview" Text="Reviews" Clicked="Button_Clicked1" HeightRequest="50" WidthRequest="160" CornerRadius="30" BackgroundColor="Gray"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

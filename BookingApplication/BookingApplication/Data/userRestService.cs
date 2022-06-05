@@ -29,6 +29,7 @@ namespace BookingApplication.Data
         Task<string> AddProprietate(AddProprietateDTO proprietate);
         Task<List<RezervariProprietateDTO>> GetRezervariProprietate(int proprietateId);
         Task<List<Proprietate>> GetProprietatiFiltered(string filter, int lowerValue, int upperValue);
+        Task<List<GetReviewsProprietateDTO>> GetReviewsProprietate(int proprietateId);
     }
 
     public class userRestService : IuserRestService
@@ -270,6 +271,15 @@ namespace BookingApplication.Data
             var content = await response.Content.ReadAsStringAsync();
             List<RezervariProprietateDTO> rezervari = JsonConvert.DeserializeObject<List<RezervariProprietateDTO>>(content);
             return rezervari;
+        }
+        public async Task<List<GetReviewsProprietateDTO>> GetReviewsProprietate(int proprietateId)
+        {
+            string addUrl = "/Review?proprietateId={0}";
+            Uri uri = new Uri(generalUrl + String.Format(addUrl, proprietateId));
+            var response = await client.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
+            List<GetReviewsProprietateDTO> reviews = JsonConvert.DeserializeObject<List<GetReviewsProprietateDTO>>(content);
+            return reviews;
         }
     }
 }

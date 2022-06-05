@@ -101,5 +101,9 @@ namespace BookingApplication.Data
         {
             return _userRestService.GetRezervariProprietate(proprietateId);
         }
+        public Task<List<GetReviewsProprietateDTO>> GetReviewsProprietate(int proprietateId)
+        {
+            return _userRestService.GetReviewsProprietate(proprietateId);
+        }
     }
 }

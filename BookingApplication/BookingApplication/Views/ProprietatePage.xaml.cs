@@ -34,7 +34,10 @@ namespace BookingApplication.Views
         {
             await Navigation.PushModalAsync(new RezervarePage(_proprietateId));
         }
+        private async void Button_Clicked1(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new ReviewPage(_proprietateId));
+        }
 
-        
     }
 }
