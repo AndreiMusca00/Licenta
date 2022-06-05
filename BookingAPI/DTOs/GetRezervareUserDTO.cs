@@ -7,6 +7,7 @@ namespace BookingAPI.DTOs
 {
     public class GetRezervareUserDTO
     {
+        public int idRezervare { get; set; }
         public string user { get; set; }
         public int idUser { get; set; }
         public int idProprietate { get; set; }

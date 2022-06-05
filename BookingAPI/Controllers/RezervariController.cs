@@ -73,5 +73,17 @@ namespace BookingAPI.Controllers
             else
                 return BadRequest();
         }
+
+        //[Authorize(Roles = "Admin,Basic")]
+        [AllowAnonymous]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteRezervare(int rezervareId)
+        { 
+            var x = await _rezervariManager.DeleteRezervare(rezervareId);
+            if (x == "ok")
+                return Ok();
+            else
+                return BadRequest();
+        }
     }
 }

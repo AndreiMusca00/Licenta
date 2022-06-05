@@ -8,21 +8,31 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Padding="5" Orientation="Horizontal" >
-                            <Label Text="{Binding numeProprietate}" TextColor="Black" FontSize="16" ></Label>
-                                <StackLayout Padding="5">
-                                    <Label Text="{Binding dataRezervare,StringFormat='Data rezervare: {0:MMMM dd, yyyy}'}"/>
-                                    <Label Text="{Binding orasProprietate, StringFormat='Localitate: {0}'}"/>
-                                    <Label>
-                                        <Label.Text>
-                                            <MultiBinding StringFormat="Adresa: {0} {1}">
-                                                <Binding Path="stradaProprietate" />
-                                                <Binding Path="numarProprietate" />
-                                            </MultiBinding>
-                                        </Label.Text>
-                                    </Label>
+                            <SwipeView>
+                                <SwipeView.LeftItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Delete" BackgroundColor="Red" CommandParameter="{Binding idRezervare}" Invoked="SwipeItem_Invoked">
+                                            
+                                        </SwipeItem>
+                                    </SwipeItems>
+                                </SwipeView.LeftItems>
+                                <StackLayout Padding="5" Orientation="Horizontal" >
+                                    <Label Text="{Binding numeProprietate}" TextColor="Black" FontSize="16" ></Label>
+                                    <StackLayout Padding="5">
+                                        <Label Text="{Binding dataRezervare,StringFormat='Data rezervare: {0:MMMM dd, yyyy}'}"/>
+                                        <Label Text="{Binding orasProprietate, StringFormat='Localitate: {0}'}"/>
+                                        <Label>
+                                            <Label.Text>
+                                                <MultiBinding StringFormat="Adresa: {0} {1}">
+                                                    <Binding Path="stradaProprietate" />
+                                                    <Binding Path="numarProprietate" />
+                                                </MultiBinding>
+                                            </Label.Text>
+                                        </Label>
+                                    </StackLayout>
                                 </StackLayout>
-                            </StackLayout>
+                            </SwipeView>
+                        
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

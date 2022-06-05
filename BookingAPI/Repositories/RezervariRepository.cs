@@ -14,6 +14,7 @@ namespace BookingAPI.Repositories
         List<RezervariProprietateDTO> GetRezervariProprietate(int proprietateId);
         List<Rezervare> AllRezervationsOfAProperty(int proprietateId);
         bool HasReview(int userId,int proprietateId);
+        Task<string> DeleteRezervare(int rezervareId);
     }
 
     public class RezervariRepository : IRezervariRepository
@@ -99,6 +100,7 @@ namespace BookingAPI.Repositories
                 rezervare.orasProprietate = variabila.orasProprietate;
                 rezervare.stradaProprietate = variabila.stradaProprietate;
                 rezervare.user = variabila.User;
+                rezervare.idRezervare = variabila.idRezervare;
                 rezervari.Add(rezervare);
             }
             return rezervari;
@@ -154,6 +156,14 @@ namespace BookingAPI.Repositories
                 return true;
             else
                 return false;
+        }
+
+        public async Task<string> DeleteRezervare(int rezervareId)
+        {
+            var rezervare = await _context.Rezervare.FindAsync(rezervareId);
+            _context.Rezervare.Remove(rezervare);
+            await _context.SaveChangesAsync();
+            return "ok";
         }
     }
 }

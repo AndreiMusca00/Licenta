@@ -32,6 +32,7 @@ namespace BookingApplication.Data
         Task<List<GetReviewsProprietateDTO>> GetReviewsProprietate(int proprietateId);
         Task<bool> HasReviewRights(int proprietateId);
         Task<string> AddReview(int proprietateId, string textReview, int notaReview);
+        Task<string> DeleteRezervare(int rezervareId);
     }
 
     public class userRestService : IuserRestService
@@ -311,6 +312,15 @@ namespace BookingApplication.Data
             else
                 return false;
         }
-  
+        public async Task<string> DeleteRezervare(int rezervareId)
+        {
+           string addUrl = "/Rezervari?rezervareId={0}";
+           Uri uri = new Uri(generalUrl + String.Format(addUrl, rezervareId));
+            var response = await client.DeleteAsync(uri);
+            if (response.IsSuccessStatusCode)
+                return "ok";
+            else
+                return "fail";
+        }
     }
 }

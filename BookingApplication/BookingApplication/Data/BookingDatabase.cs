@@ -114,5 +114,10 @@ namespace BookingApplication.Data
         {
             return _userRestService.AddReview(proprietateId, textReview, notaReview);
         }
+
+        public Task<string> DeleteRezervare(int rezervareId)
+        {
+            return _userRestService.DeleteRezervare(rezervareId);
+        }
     }
 }

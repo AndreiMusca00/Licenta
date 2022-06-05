@@ -21,5 +21,14 @@ namespace BookingApplication.Views
             base.OnAppearing();
             listView.ItemsSource = await App.Database.GetIstoricRezervariBasic();
         }
+
+        private async void SwipeItem_Invoked(object sender, EventArgs e)
+        {
+            string id = ((MenuItem)sender).CommandParameter.ToString();
+            int idBun = Convert.ToInt32(id);
+            var response = await App.Database.DeleteRezervare(idBun);
+            if(response=="ok")
+                listView.ItemsSource = await App.Database.GetIstoricRezervariBasic();
+        }
     }
 }

@@ -14,6 +14,7 @@ namespace BookingAPI.Managers
         Object AdminRezervariHistory(int id);
         List<RezervariProprietateDTO> GetRezervariProrietate(int proprietateId);
         bool HasReview(int userId,int proprietateId);
+        Task<string> DeleteRezervare(int rezervareId);
     }
     public class RezervariManager : IRezervariManager
     {
@@ -57,6 +58,11 @@ namespace BookingAPI.Managers
         public bool HasReview(int userId,int proprietateId)
         {
             return _rezervariRepository.HasReview(userId,proprietateId);
+        }
+
+        public async Task<string> DeleteRezervare(int rezervareId)
+        {
+            return await _rezervariRepository.DeleteRezervare(rezervareId);
         }
     }
 }
