@@ -105,5 +105,14 @@ namespace BookingApplication.Data
         {
             return _userRestService.GetReviewsProprietate(proprietateId);
         }
+        public Task<bool> HasReviewRights(int proprietateId)
+        {
+            return _userRestService.HasReviewRights(proprietateId);
+        }
+
+        public Task<string> AddReview(int proprietateId, string textReview, int notaReview)
+        {
+            return _userRestService.AddReview(proprietateId, textReview, notaReview);
+        }
     }
 }

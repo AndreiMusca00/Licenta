@@ -23,10 +23,10 @@ namespace BookingAPI.Controllers
 
         [Authorize(Roles = "Basic, Admin")]
         [HttpPost]
-        public async Task<IActionResult> UserAddRezervare(int notaReview, string textReview,int proprietateId)
+        public async Task<IActionResult> UserAddReview(AddReviewDTO review)
         {
             int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            var response = await _reviewManager.AddReview(userId, notaReview, textReview,proprietateId);
+            var response = await _reviewManager.AddReview(userId, review.Nota, review.Text,review.ProprietateId);
             if (response == "Succes")
             {
                 return Ok(response);

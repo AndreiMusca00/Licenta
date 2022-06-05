@@ -62,5 +62,16 @@ namespace BookingAPI.Controllers
             var x = _rezervariManager.AdminRezervariHistory(id);
             return Ok(x);
         }
+        [Authorize(Roles = "Admin,Basic")]
+        [HttpGet("hasReview")]
+        public async Task<IActionResult> CheckUserHasReservation(int proprietateId)
+        {
+            int id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            var x = _rezervariManager.HasReview(id,proprietateId);
+            if (x == true)
+                return Ok();
+            else
+                return BadRequest();
+        }
     }
 }

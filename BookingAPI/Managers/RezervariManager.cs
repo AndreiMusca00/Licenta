@@ -13,6 +13,7 @@ namespace BookingAPI.Managers
         Task<string> UserAddRezervare(int userId, int proprietateId, DateTime data);
         Object AdminRezervariHistory(int id);
         List<RezervariProprietateDTO> GetRezervariProrietate(int proprietateId);
+        bool HasReview(int userId,int proprietateId);
     }
     public class RezervariManager : IRezervariManager
     {
@@ -41,17 +42,21 @@ namespace BookingAPI.Managers
             }
             
         }
-       public Object UserRezervariHistory(int id)
+        public Object UserRezervariHistory(int id)
         {
             return _rezervariRepository.UserRezervariHistory(id);
         }
-       public  Object AdminRezervariHistory(int id)
+        public  Object AdminRezervariHistory(int id)
         {
             return _rezervariRepository.AdminRezervariHistory(id);
         }
-       public List<RezervariProprietateDTO> GetRezervariProrietate(int proprietateId)
+        public List<RezervariProprietateDTO> GetRezervariProrietate(int proprietateId)
         {
             return _rezervariRepository.GetRezervariProprietate(proprietateId);
+        }
+        public bool HasReview(int userId,int proprietateId)
+        {
+            return _rezervariRepository.HasReview(userId,proprietateId);
         }
     }
 }

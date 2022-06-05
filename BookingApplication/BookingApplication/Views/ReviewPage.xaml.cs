@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookingApplication.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,11 +13,14 @@ namespace BookingApplication.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ReviewPage : ContentPage
     {
+        ReviewPageVM reviewPageVM;
         readonly int _proprietateId;
         public ReviewPage(int proprietateId)
         {
             _proprietateId = proprietateId;
             InitializeComponent();
+            reviewPageVM = new ReviewPageVM(proprietateId);
+            BindingContext = reviewPageVM;
         }
         protected override async void OnAppearing()
         {

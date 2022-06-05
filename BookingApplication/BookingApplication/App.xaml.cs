@@ -18,7 +18,7 @@ namespace BookingApplication
                BarBackgroundColor = Color.Gray,
              BarTextColor = Color.White
             };
-            //MainPage = new NavigationPage(new TryImageUploadPage_());
+            //MainPage = new NavigationPage(new AdaugaReviewPage(8));
             //MainPage = new NavigationPage(new RezervariProprietatePage(2));
         }
 

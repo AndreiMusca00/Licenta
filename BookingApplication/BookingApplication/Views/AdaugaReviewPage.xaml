@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookingApplication.Views.AdaugaReviewPage">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="LightGray">
+            <Label Text="Review" Padding="0,20,0,0" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" TextColor="Black"></Label>
+            <StackLayout Orientation="Horizontal">
+                    <Label Grid.Row="0" Grid.Column="0" Text="Nota:" TextColor="Black" FontSize="18"/>
+                    <Slider x:Name="Slider" Maximum="10" Minimum="1" WidthRequest="200" Value="{Binding Nota}"></Slider>
+                    <Label BindingContext="{x:Reference Slider}" Text="{Binding Value,StringFormat='{0:#}'}"></Label>
+                </StackLayout>
+            <Editor x:Name="editor" Placeholder="Scrie cateva cuvinte despre experienta ta" HeightRequest="300" Margin="10" BackgroundColor="White" Text="{Binding TextReview}"></Editor>
+            <Button Text="Submit" CornerRadius="20" WidthRequest="200" HorizontalOptions="Center" BackgroundColor="Gray" Command="{Binding AddReviewCommand}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

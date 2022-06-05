@@ -27,7 +27,7 @@ namespace BookingAPI.Managers
                 return "Succes";
             }
             else
-                return "Nota trebuie sa fie intre 1 si 10";
+                return "Nota Gresita";
         }
 
         public List<GetReviewsProprietateDTO> GetReviewsProprietate(int proprietateId,int userId)

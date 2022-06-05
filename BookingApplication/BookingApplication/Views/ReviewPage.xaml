@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BookingApplication.Views.ReviewPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label></Label>
+        <StackLayout BackgroundColor="LightGray">
+            <Button Text="Adauga review" Command="{Binding AddReviewCommand}" CornerRadius="20" WidthRequest="200" HorizontalOptions="Center" BackgroundColor="Gray" Margin="10"></Button>
             <ListView x:Name="listView" Margin="20" HasUnevenRows="True" >
                 <ListView.ItemTemplate>
                     <DataTemplate>

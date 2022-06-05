@@ -13,6 +13,7 @@ namespace BookingAPI.Repositories
         Object AdminRezervariHistory(int id);
         List<RezervariProprietateDTO> GetRezervariProprietate(int proprietateId);
         List<Rezervare> AllRezervationsOfAProperty(int proprietateId);
+        bool HasReview(int userId,int proprietateId);
     }
 
     public class RezervariRepository : IRezervariRepository
@@ -112,7 +113,6 @@ namespace BookingAPI.Repositories
             await _context.SaveChangesAsync();
             return rez;
         }
-
         public Object AdminRezervariHistory(int id)
         {
 
@@ -147,6 +147,13 @@ namespace BookingAPI.Repositories
         {
             return _context.Rezervare.Where(rez => rez.proprietateId == proprietateId).ToList();
         }
-
+        public bool HasReview(int userId,int proprietateId)
+        {
+            var rezervare = _context.Rezervare.Where(rez => rez.userId == userId && rez.proprietateId == proprietateId).ToList();
+            if (rezervare.Count !=0 )
+                return true;
+            else
+                return false;
+        }
     }
 }

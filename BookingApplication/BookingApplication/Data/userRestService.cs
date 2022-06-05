@@ -30,6 +30,8 @@ namespace BookingApplication.Data
         Task<List<RezervariProprietateDTO>> GetRezervariProprietate(int proprietateId);
         Task<List<Proprietate>> GetProprietatiFiltered(string filter, int lowerValue, int upperValue);
         Task<List<GetReviewsProprietateDTO>> GetReviewsProprietate(int proprietateId);
+        Task<bool> HasReviewRights(int proprietateId);
+        Task<string> AddReview(int proprietateId, string textReview, int notaReview);
     }
 
     public class userRestService : IuserRestService
@@ -109,6 +111,24 @@ namespace BookingApplication.Data
             }
             return Proprietati;
 
+        }
+        public async Task<string> AddReview(int proprietateId, string textReview, int notaReview)
+        {
+            string addUrl = "/Review";
+            AddReviewDTO review = new AddReviewDTO() { 
+                Nota=notaReview,
+                ProprietateId=proprietateId,
+                Text=textReview
+            };
+            Uri uri = new Uri(generalUrl + addUrl);
+            string json = JsonConvert.SerializeObject(review);
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(uri, content);
+            if (response.IsSuccessStatusCode)
+                return "ok";
+            else
+                return "fail";
+            
         }
         public async Task<string> AddRezervare(int proprietateId, DateTime data)
         {
@@ -281,5 +301,16 @@ namespace BookingApplication.Data
             List<GetReviewsProprietateDTO> reviews = JsonConvert.DeserializeObject<List<GetReviewsProprietateDTO>>(content);
             return reviews;
         }
+        public async Task<bool> HasReviewRights(int proprietateId)
+        {
+            string addUrl = "/Rezervari/hasReview?proprietateId={0}";
+            Uri uri = new Uri(generalUrl + String.Format(addUrl, proprietateId));
+            var response = await client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+                return true;
+            else
+                return false;
+        }
+  
     }
 }
