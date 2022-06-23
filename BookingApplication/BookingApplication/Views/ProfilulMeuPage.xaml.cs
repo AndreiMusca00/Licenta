@@ -42,7 +42,7 @@ namespace BookingApplication.Views
            
         }
 
-        protected override  void OnAppearing()
+        protected override void OnAppearing()
         {
             LblText = _numeUtilizator;
             base.OnAppearing();

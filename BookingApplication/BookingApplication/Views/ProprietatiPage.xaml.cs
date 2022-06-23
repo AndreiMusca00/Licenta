@@ -57,7 +57,6 @@ namespace BookingApplication.Views
 
         private async void rangeSliderChangedValue(object sender, EventArgs e)
         {
-            slider.Text = rangeSlider.LowerValue.ToString()+" "+rangeSlider.UpperValue.ToString();
             listView.ItemsSource = await ViewModel.CreateFilteredBindingContext(searchBar.Text, Convert.ToInt32(rangeSlider.LowerValue), Convert.ToInt32(rangeSlider.UpperValue));
         }
     }

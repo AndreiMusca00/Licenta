@@ -12,7 +12,7 @@
                                 <SwipeView.LeftItems>
                                     <SwipeItems>
                                         <SwipeItem Text="Delete" BackgroundColor="Red" CommandParameter="{Binding idRezervare}" Invoked="SwipeItem_Invoked">
-                                            
+
                                         </SwipeItem>
                                     </SwipeItems>
                                 </SwipeView.LeftItems>
@@ -32,8 +32,7 @@
                                     </StackLayout>
                                 </StackLayout>
                             </SwipeView>
-                        
-                    </ViewCell>
+                        </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
             </ListView>

@@ -77,7 +77,6 @@ namespace BookingAPI.Controllers
         public async Task<IActionResult> Get(int idProprietate)
         {
             var filePathh = await _imageManager.OneImagePath(idProprietate);
-            //var filePath = "C:\\Users\\acer\\Desktop\\Licenta\\Aplicatie\\Aplicatie\\BookingAPI\\Uploads\\IMG_20220507_134458.jpg";
             if (System.IO.File.Exists(filePathh))
             {
                 byte[] b = System.IO.File.ReadAllBytes(filePathh);

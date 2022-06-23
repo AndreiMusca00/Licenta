@@ -38,7 +38,7 @@ namespace BookingApplication.Data
     public class userRestService : IuserRestService
     {
         HttpClient client;
-        string generalUrl = "https://192.168.0.105:45455/api";
+        string generalUrl = "https://192.168.0.103:45455/api";
         public List<Proprietate> Proprietati;
         public List<GetRezervareUserDTO> Rezervari;
 

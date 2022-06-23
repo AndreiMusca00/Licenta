@@ -16,7 +16,6 @@
             <sl:RangeSlider x:Name="rangeSlider" MinimumValue="50" MaximumValue="1000" StepValue="50" WidthRequest="300"  ShowTextAboveThumbs="True"
                             LowerValue="50" UpperValue="1000" LowerValueChanged="rangeSliderChangedValue" UpperValueChanged="rangeSliderChangedValue"></sl:RangeSlider>
         </StackLayout>
-        <Label x:Name="slider"></Label>
         <ListView x:Name="listView" Margin="20" HasUnevenRows="True" ItemSelected="listView_ItemSelected" >
         <ListView.ItemTemplate>
             <DataTemplate>

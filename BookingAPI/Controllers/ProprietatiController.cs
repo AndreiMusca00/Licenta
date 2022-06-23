@@ -23,7 +23,7 @@ namespace BookingAPI.Controllers
             _proprietatiManager = manager;
         }
     
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin, Basic")]
         [HttpGet("all")]
         public async Task<IActionResult> GetProprietati(string filtru,int? filtruPretMax, int? filtruPretMin)
         {
