@@ -96,6 +96,10 @@ namespace BookingApplication.ViewModels
             {
                 await Application.Current.MainPage.Navigation.PopAsync();
             }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Numele de utilizator este deja folosit", "Ok");
+            }
         }
     }
 }

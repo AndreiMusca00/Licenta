@@ -27,7 +27,7 @@ namespace BookingAPI.Repositories
         public async Task<Image> AddImage(int idProprietate, string pathImagine)
         {
             Image image = new Image();
-            image.idProprietate = idProprietate;
+            image.proprietate.Id= idProprietate;
             image.imagePath = pathImagine;
 
             _context.Imagine.Add(image);
@@ -37,7 +37,7 @@ namespace BookingAPI.Repositories
 
         public bool CheckPhotoUpdated(int idProprietate, string pathImagine)
         {
-            if (_context.Imagine.FirstOrDefault(x => x.idProprietate == idProprietate && x.imagePath == pathImagine) != null)
+            if (_context.Imagine.FirstOrDefault(x => x.proprietate.Id== idProprietate && x.imagePath == pathImagine) != null)
             {
                 return false;
             }
@@ -46,7 +46,7 @@ namespace BookingAPI.Repositories
 
         public async Task<string> OneImagePath(int proprietateId)
         {
-            Image img = _context.Imagine.FirstOrDefault(x => x.idProprietate == proprietateId);
+            Image img = _context.Imagine.FirstOrDefault(x => x.proprietate.Id == proprietateId);
             return img.imagePath.ToString();
         } 
 
@@ -54,7 +54,7 @@ namespace BookingAPI.Repositories
         //try eficienta 
         public string ImagineTry(int idRezervare)
         {
-            Image img = _context.Imagine.FirstOrDefault(x => x.idProprietate == idRezervare);
+            Image img = _context.Imagine.FirstOrDefault(x => x.proprietate.Id == idRezervare);
             if (img != null)
                 return img.imagePath.ToString();
             else return ""; 
@@ -63,7 +63,7 @@ namespace BookingAPI.Repositories
         //Get image list of paths 
         public List<string> GetImagesList(int proprietateId)
         {
-            return _context.Imagine.Where(im => im.idProprietate==proprietateId).Select(x => x.imagePath).ToList();
+            return _context.Imagine.Where(im => im.proprietate.Id==proprietateId).Select(x => x.imagePath).ToList();
         }
     }
 }
